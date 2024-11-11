@@ -9,6 +9,7 @@ const port = 3000;
 //Para poder acceder los CCS
 app.use(express.static("public"));
 
+
 //Para decodificar el HTML
 app.use(bodyParser.urlencoded({ extended:true}));
 
