@@ -1,37 +1,249 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="styles/main.css">
-    
-    <title>E-Commerce</title>
-</head>
+<%- include("partials/header.ejs")%>
+
 <body>
-    <div class="nav-bar-top">
-        <div class="space"></div>
-        <div class="nav-bar-area">
-            <div class="logo">COROTOS</div>
+  <!-- Tooltip shown when clicking the property type button -->
+                      <div id="modalOverlay" >
+                        <div id="modalContent">
+                          <button id="closeModalBtn">
+                            <div class="closeModalBtn-x">
+                              <svg width="24" height="24" viewBox="0 0 20 20">
+                              <line x1="4" y1="4" x2="16" y2="16" stroke="#b99a32" stroke-width="2"/>
+                              <line x1="16" y1="4" x2="4" y2="16" stroke="#b99a32" stroke-width="2"/>
+                            </svg>
+                            </div>
 
-            <div class="search-bar-area">
-                <form class="form-search" method="get" action="/search">
-                    <input id="search" type="text" class="search-input" value name="search" placeholder="Busca el hogar de tus suenos...">
-                <div class="search-button"><img class="search-icon" src="images/lupaIcon.png"></div>
-                
-                </form>
-            </div>
-            <div>Iniciar Sesion</div>
-            <div>Publicar</div>
-        </div>
+                            <div>Cerrar</div>
+                          </button>
+
+                          <div class="modal-city-label">Ciudad:</div>
+
+                          <div id="containerCity">
+                            <div id="divA">
+                              <div id="cityButton">Seleccionar</div>
+                              <div class="div-inmmuebles">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="15" height="15" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                </svg>                   
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="modal-city-label">Ciudad:</div>
+
+                          <div id="containerSector" class="ashley">PRUEBA</div>
+                        </div>
+                      </div>
+  <% console.log(locals.content) %>
+  <div class="home-page-area">
+    <!--Espacio en los lados-->
+      <div class="space-home"></div>
+    <!--Aera del centro de la paguina-->
+      <div id="homeBarArea" class="home-bar-area">
+        <div class="eliel">
+          <h1 class="big_title">Encuentra el hogar <br> de tus suenos</h1>
         
+        
+          <div class="title-search-div-a">
+            <div class="segmented-control">
+              <button class="segment selected">Todos</button>
+              <button class="segment">Compra</button>
+              <button class="segment">Alquiler</button>
+            </div>
+            <!--BOTONES DE ELEGIR TIPO DE INMUEBLE, PRECIO Y LUGAR-->
+            <!-- Main search container -->
+            <div class="title-search-div-c">
+              <div class="title-search-div-b">
+                
+                
+                
+                 <!-- Button: Property Type -->
+                <div class="div-b">
+                  <button id="tooltipBtn" class="details-search-button">
+                    <div class="div-b-a">
 
-   
-        <div class="space"></div>
+
+                     <!-- Tooltip shown when clicking the property type button -->
+                      <div id="tooltipType" class="tooltip-type" >
+                        <div class="container-tool-type">
+                        <div id="inmueble-1" onclick="handleTypeTool('inmueble-1')">Inmuebles</div>
+                        <div id="inmueble-2" onclick="handleTypeTool('inmueble-2')">Apartamentos</div>
+                        <div id="inmueble-3" onclick="handleTypeTool('inmueble-3')" >Casas</div>
+                        <div id="inmueble-4" onclick="handleTypeTool('inmueble-4')">Casas Vacacionales y Villas</div>
+                        <div id="inmueble-5" onclick="handleTypeTool('inmueble-5')">Locales y Oficinas</div>
+                        <div id="inmueble-6" onclick="handleTypeTool('inmueble-6')">Solares</div>
+                        <div id="inmueble-7" onclick="handleTypeTool('inmueble-7')">Penthouses</div>
+                        <div id="inmueble-8" onclick="handleTypeTool('inmueble-8')">Otros</div>
+                        </div>
+                      </div>
+
+                      <!-- House icon -->
+                      <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="#d1d1d1" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>                        
+                      </div>
+
+                      <!-- Label: Property -->
+                      <span class="span-inmuebles">Inmuebles</span>
+
+                      <!-- Dropdown arrow icon -->
+                      <div class="div-inmmuebles">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="15" height="15" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>                         
+                      </div>
+
+                    </div>
+                  </button>
+                </div>
+
+
+               <!-- Button: Price -->  
+                <div class="div-b">
+                  <button id="tooltipBtnPrice" class="details-search-button">
+                    <div class="div-b-ab">
+                      
+                       <!-- Tooltip shown when clicking the property "PRICE"" button -->
+                      <div id="tooltipPrice" class="tooltip-price" >
+                        <div class="container-tool-price">
+                          <div class="tool-price-moneda">Moneda</div>
+
+                          <div class="tool-price-moneda-options">
+                            <div class="tool-price-moneda-rd tool-price-moneda-selected" id="toolPriceRd">$RD</div>
+                            <div class="tool-price-moneda-usa" id="toolPriceUsa">$USA</div>
+                          </div>
+
+                          <div class="currency-labels">
+                            <div class="min-label">Minimo</div>
+                            <div class="max-label">Maximo</div>
+                          </div>
+
+                          <div class="area-price-input">
+                            <input class="price-input" type="text" id="inputMin" placeholder="Mínimo" />
+                            <input class="price-input" type="text" id="inputMax" placeholder="Máximo" />
+                          </div>
+
+                          <div class="toolprice-buttons">
+                            <div class="toolprice-clear" id="toolPriceClear">Limpiar</div>
+                            <div class="toolprice-save" id="toolPriceSave">Guardar</div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- House icon -->
+                      <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="#d1d1d1" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>                        
+                      </div>
+
+
+                      <!-- Label: Price -->
+                      <span class="span-inmuebles" id="spanPrecio">Precio</span>
+
+
+                      <!-- Dropdown arrow icon -->
+                      <div class="div-inmmuebles">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="15" height="15" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>                         
+                      </div>
+
+
+                    </div>
+                  </button>
+                </div>
+
+                <!-- Button: Location -->
+                <div class="div-b">
+                  <button id="openModalBtn" class="details-search-button">
+                    <div class="div-b-a">
+
+                      <!-- House icon -->
+                      <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="#d1d1d1" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>                        
+                      </div>
+
+
+                      <!-- Label: Location -->
+                      <span class="span-inmuebles">Ubicacion</span>
+
+
+                      <!-- Dropdown arrow icon -->
+                      <div class="div-inmmuebles">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="15" height="15" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>                         
+                      </div>
+
+
+                    </div>
+                  </button>
+                </div>
+                
+                
+              </div>
+            </div>
+            
+
+            <!-- Hidden form to store search values -->
+            <form style="display: none;">
+              <input id="type-search" type="hidden" name="inmuebles" value="">
+              <input  value="" id="tipo-inmueble-busqueda" type="text" name="inmueble">
+              <input id="moneda-busqueda" type="text" name="moneda" value="">
+              <input id="min-precio-busqueda" type="number" name="minPrecio" value="">
+              <input id="max-precio-busqueda" type="number" name="maxPrecio" value="">
+              <input id="ciudad-busqueda" type="text" name="ubicacion" value="">
+              <input id="sector-busqueda" type="text" name="ubicacion" value="">
+            </form>
+          </div>
+        </div>  
+      </div>
+      <!-- Extra space below the search section -->
+      <div class="space-home"></div>
+  </div>
+
+
+
+
+
+  <!--
+  <div class="result-number">
+    <% if (locals.content) { %>
+      <div class="result-number-count">Results: <%=locals.content.length%></div>
+      <p class="result-number-p">Check each product page for other buying options.
+      <%} else {%>
+        <div class="result-number-count">Results: None</div>
+        <% } %>
+      </p>
     </div>
-    <div class="nav-bar-button">
-
+    <div id="homeGrid" class="home-grid-container">
+      <% if (locals.content) { %>
+      <% for (let i = 0; i < locals.content.length; i++) {   %>
+        <form method="POST" action="/anuncio" type="button" >
+        <div class="result-product">
+          
+            <div class="result-product-image">
+              <button class="submit" type="submit" value="<%=content[i].idDrink%>" name="id">
+                <img class="product-image"  src="<%=content[i].strDrinkThumb%>">
+              </button>
+              </div>
+          
+          <button class="submit" type="submit" value="<%=content[i].idDrink%>" name="id">
+            <div id="productTitle" class="result-product-title"><%=content[i].strDrink%></div>
+          </button>
+          
+          <div class="result-product-licor"><%=content[i].strCategory%></div>
+        </div>
+      </form>
+      <% } %>
+      <% } %>
     </div>
+    -->
 
-
+  <script src="test.js" type="text/javascript">
+    
+  </script>
 </body>
-</html>

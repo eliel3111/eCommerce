@@ -1,17 +1,33 @@
 body {
     margin: 0px;
+    margin-bottom: 100px;
+}
+
+:root {
+  --main-color: #b71c1c;
+  --secondary-color: #b99a32;
+}
+
+/* bigshot one font */
+@import url(https://fonts.googleapis.com/css?family=Cabin+Condensed);
+
+svg{font-weight:bold;max-width:600px;height:100%;}
+
+.tittle-a {
+    color: #FACC00;
 }
 
 .nav-bar-top {
-    background-color: #1d477a;
+    background-color: #b71c1c;
     display: flex;
-    height: 63px;
+    height: 75px;
     margin-top: 0px;
 }
 
+
 .space {
-    flex: 0.5;
-    background-color: black;
+    flex: 1;
+
 }
 
 .nav-bar-area {
@@ -27,7 +43,6 @@ body {
     color: white;
 }
 .search-bar-area {
-    background-color: purple;
     display: flex;
     width: 700px;
 }
@@ -48,6 +63,14 @@ body {
  font-size: 15px;
 }
 
+.submit-button {
+    background-color: #1d477a;
+    border: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
 .search-button {
     background-color: #FACC00;
     width: 41px;
@@ -59,10 +82,871 @@ body {
     border-bottom-right-radius: 6px;
 }
 
-.prueba {
 
+.iniciar-sesion, .nav-yellow-botton {
+ color: #111116;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ margin-left: 25px;
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ font-weight: 500;
+ font-size: 16px;
+ cursor: pointer;
+}
+
+.iniciar-sesion:hover {
+    color: #1e7e34;
+}
+
+.yellow-botton {
+    background-color: #1A1A1A;
+    padding: 10px 12px 10px 12px;
+    color: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.yellow-botton:hover {
+    transform: translate(-2px);
+    background-color: #1e7e34;
+    color: #F1F1F1;
+}
+
+.yellow-botton:active {
+    background-color: #F1F1F1;
+    transform: translateY(0);
 }
 
 .search-icon {
     height: 20px;
+}
+
+/*DISENO DE HOME EJS*/
+
+.home-page-area {
+    height: 100%;
+    display: flex;
+    margin-top: 10px;
+
+}
+
+.space-home, .space-anuncio {
+    flex: 1;
+}
+
+.home-bar-area {
+    flex: 7;
+    display: flex;
+    position: relative;
+    height: 500px;
+    flex-direction: column;
+    background-image: url('../images/home.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50px;
+    padding-left: 20px;
+}
+
+.home-bar-area::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50px;
+    z-index: 1;
+}
+
+/*Encuentra el hogar
+de tus suenos*/
+.big_title {
+    font-size: 56px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    color: #eac23c;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    margin-top: 60px;
+    line-height: 1;
+}
+
+.eliel {
+    z-index: 2;
+}
+
+.segmented-control {
+    display: inline-flex;
+    border: 1px solid #f9f9f9;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    overflow: hidden;
+    background: #212121;
+  }
+  
+  .segmented-control .segment {
+    padding: 10px 20px;
+    background: transparent;
+    border: none;
+    color: #f9f9f9;
+    font-size: 14px;
+    font-family: Helvetica, sans-serif;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .segmented-control .segment:hover {
+    background: #b71c1c;
+    color: #f9f9f9;
+  }
+  
+  .segmented-control .selected {
+    background: #f9f9f9;
+    color: #000;
+    font-size: 17px;
+  }
+  
+  .title-search-div-a {
+    width: 500px;
+  }
+
+.title-search-div-b {
+    background-color: #f9f9f9;
+    display: flex;
+    height: 60px;
+    flex: 1;
+    border-radius: 8px;
+    border-top-left-radius: 0px;
+    border: 1px solid #f9f9f9;
+}
+
+.div-b, .div-b-a {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-content: center;
+    position: relative;  /*ESTO HACE QUE EL TOOLTIP ESTE ABSOLUTE*/
+}
+
+.div-b-a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.div-b-ab {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-content: center;
+    position: relative;  /*ESTO HACE QUE EL TOOLTIP ESTE ABSOLUTE*/
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Tooltip for the 'property type' button -----------------------*/
+.tooltip-type {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    
+
+    /* Appearance */
+    background-color: #f9f9f9;
+    color: black;
+    border-radius: 5px;
+    width: 300px;
+    border-radius: 20px;
+    border: #212121 2px solid;
+
+    /* Shadow effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);   
+
+    /* Visibility control */
+    z-index: 10;
+    display: none;
+}
+
+/* Main container for the tooltip list */
+.container-tool-type {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+}
+
+/* Styles for each item inside the container */
+.container-tool-type div {
+    /* Layout */
+    justify-content: left;
+    display: flex;
+
+     /* Borders and sizing */
+    padding: 14px 0px 14px 10px;
+    border: 1px solid #ccc;
+    height: auto; /* Ajuste dinámico */
+    
+     /* Typography */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    font-weight: bold;
+}
+
+/*------------------------------------------------------*/
+
+/* Tooltip for the 'property PRICE' button */
+.tooltip-price {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+
+    /* Appearance */
+    background-color: #f9f9f9;
+    color: black;
+    width: 300px;
+    border-radius: 20px;
+    border: #212121 2px solid;
+
+
+    /* Visibility control */
+    z-index: 10;
+    display: none;
+}
+
+/* Main container for the tooltip list */
+.container-tool-price {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+}
+
+/* Styles for each item inside the container */
+.container-tool-price div {
+    /* Layout */
+    display: flex;
+
+    height: auto; /* Ajuste dinámico */
+
+    /* Typography */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
+
+.tool-price-moneda {
+    margin-left: 15px;
+    padding-top: 10px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.tool-price-moneda-options {
+    justify-content: center;
+}
+
+.tool-price-moneda-rd {
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 40px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.tool-price-moneda-usa {
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 40px;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+
+.tool-price-moneda-rd:hover, .tool-price-moneda-usa:hover {
+    background-color: #212121;
+    color: #d1d1d1;
+}
+
+.tool-price-moneda-selected {
+    background-color: #999999;
+}
+
+/*Area de label de minimo y maximo*/
+
+.currency-labels {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+}
+
+.min-label, .max-label {
+    color: #b71c1c;
+    font-size: 14px;
+}
+
+/* Area de los inputs del minimo y maximo*/
+  /*Contedenor*/
+.area-price-input {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px;
+    margin-bottom: 5px;
+}
+  /*Elementos Input*/
+.price-input {
+  padding: 10px;
+  width: 120px; /* ajuste ideal */
+  box-sizing: border-box;
+  font-family: monospace; /* más predecible para números */
+  font-size: 15px;
+  border-radius: 5px;
+  border: #999999 solid 1px;
+  background-color: #ffffff;
+}
+
+/*AREA DE BOTONES DE ABAJO "LIMPIAR" y "Guardar"*/
+        /*Container*/
+.toolprice-buttons {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+}
+    /*Button clear*/
+.toolprice-clear, .toolprice-save {
+    color: #F1F1F1;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #1A1A1A;
+    padding: 10px;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.toolprice-save {
+    background-color: #D4AF37;
+    color: #1A1A1A;
+}
+
+.toolprice-save:hover {
+    background-color: #b99a32;
+    font-size: 16px;
+    padding-top: 7px;
+    padding-bottom: 9px;
+    padding-left: 6px;
+    padding-right: 7px;
+    transition: transform 0.3s ease;
+}
+
+/*----------------------------------------------------------------*/
+/*------------------------------------------------------*/
+
+/* Tooltip for the 'property LOCATION' button */
+
+#modalOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-city-label {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 17px;
+    margin-top: 15px;
+    padding: 10px;
+}
+.ashley {
+    background-color: red;
+}
+
+#containerCity {
+      border: 1px solid #ccc;
+      padding: 20px;
+      width: 360px;
+      
+    }
+
+    #divA {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border: 2px solid #999999;
+        border-radius: 10px;
+    }
+
+    #divA:hover {
+        border: 2px solid #b71c1c;
+    }
+    
+    .ciudades-busqueda {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 15px;
+        font-weight: bold;
+        color: #212121;
+        padding-left: 25px;
+    }
+
+    .ciudades-busqueda:hover {
+        background-color: #d1d1d1;
+    }
+
+    #cityButton {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 17px;
+        color: #212121;
+    }
+
+    #cityInput {
+        margin-top: 10px;
+        padding: 10px;
+        width: 337px;
+        padding: 10px;
+        border: 2px solid #b99a32;
+        border-radius: 10px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 15px;
+    }
+
+    #cityInput:focus {
+        border: 2px solid #b99a32; /* azul al hacer focus */
+        box-shadow: 0 0 5px rgba(185, 154, 50, 0.6); /* sombra con #b99a32 en RGBA */
+    }
+
+    #cityList {
+      margin-top: 10px;
+      list-style: none;
+      padding-left: 0px;
+      display: flex;
+      flex-direction: column;
+      height: 250px;
+      overflow-y: auto; /*Habilita el scroll vertical*/
+    }
+
+    #cityList li {
+      padding: 15px 10px;
+      cursor: pointer;
+    }
+
+#modalContent {
+    width: 400px;
+    height: 500px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0   0   10px    rgba(0, 0, 0, 0.3);
+    position: relative;
+    border-radius: 10px;
+}
+
+#closeModalBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    color: var(--main-color);
+    background-color: transparent;
+}
+
+.closeModalBtn-x {
+    display: flex;
+    align-items: center;
+
+}
+
+.span-inmuebles {
+    margin-left: 40px;
+    margin-right: 10px;
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.div-inmmuebles {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+.details-search-button {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.details-search-button:hover {
+    border: none;
+    border-bottom: 3px solid #b71c1c;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: #d1d1d1;
+}
+
+.result-number {
+ padding-left: 5px;
+}
+
+.result-number-count {
+    font-weight: bold;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 16px;
+}
+
+.result-number-p {
+    margin-top: 5px;
+    color: #565959;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/*GRID HOME EJS SECTION*/
+
+.home-grid-container {
+    display: grid;
+    justify-content: center;
+    column-gap: 10px;
+    row-gap: 10px;
+    grid-template-columns: 250px 250px 250px 250px;
+    grid-template-rows: auto auto;
+}
+
+.result-product {
+ border: #F0F0F0 solid 1.2px;
+ border-radius: 5px;
+ height: 100%;
+}
+
+.submit {
+    color: inherit;
+    background-color: white;
+    border: none;
+    padding: 0;
+    outline: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.result-product-image {
+    display: flex;
+    justify-content: center;
+    background-color: #F8F8F8;
+}
+.product-image {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.result-product-title {
+    margin-top: 8px;
+    margin-left: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: sans-serif;
+    cursor: pointer;
+    text-align: left;
+}
+
+.result-product-title:hover {
+    color: #FACC00;
+}
+
+.result-product-licor {
+    font-family: sans-serif;
+    margin-left: 6px;
+    margin-top: 3px;
+    font-size: 14px;
+    color: #565959;
+}
+
+.home-bar-area {
+    background-color: none;
+}
+
+/*PAGUINA DE ANUNCIO PARA PROYECTAR UNA IMAGEN*/
+
+.space-anuncio {
+
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 40.5px;
+}
+
+.anuncio-image-small {
+    height: 40px;
+    width: 50px;
+    border-radius: 5px;
+    object-fit: cover;
+    margin-top: 10px;
+}
+
+.anuncio-image-small:hover {
+    border: 2px solid #FACC00;
+}
+
+.seccion-anuncio-a {
+ display: flex;
+ height: 100%;
+}
+
+.anuncio-imagen-principal, .image-slider {
+    height: 100%;
+    flex: 1.4;
+    display: flex;
+    justify-content: center;
+}
+
+.anuncio-imagen-principal {
+    position: relative;
+}
+
+.slide-button {
+    position: absolute;
+    top: 45%;
+    height: 50px;
+    width: 50px;
+    color: #fff;
+    border: none;
+    outline: none;
+    background-color: #000;
+    font-size: 2.2rem;
+    cursor: pointer;
+    border-radius: 50%;
+    opacity: 0.7;
+    box-shadow: 1px 1px 10px black;
+    padding-left: 15px;
+    padding-top: 8px;
+}
+
+.slide-button#next-image {
+    padding-left: 10px;
+}
+
+.arrow-slide {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+.slide-button:hover {
+    opacity: 1;
+}
+
+.image-slider .slide-button#last-image {
+   left: 10px;
+}
+
+.image-slider .slide-button#next-image {
+    right: 10px;
+}
+
+.anuncio-area-titulo {
+    height: 100%;
+    flex: 1;
+}
+
+.anuncio-image-big {
+    height: 430px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/*----AREA DEL TITUL, PRECIO Y TAMBIEN DIRECCION----*/
+
+.anuncio-area-titulo {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-area {
+    height: 100px;
+    border-bottom: 0.5px solid #b8bbbb;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+}
+
+.title-area div {
+    font-family: "DM Serif Text", serif;
+    font-size: 30px;
+    font-weight: 600;
+    font-style: normal;
+    padding-top: 0;
+}
+
+/*Area de Precio y Ubicacion*/
+.price-location-area {
+    height: 150px;
+    border-bottom: 0.5px solid #b8bbbb;
+}
+
+.price-anuncio {
+    font-family: "DM Serif Text", serif;
+    font-size: 35px;
+    color: #008000;
+    margin-bottom: 0;
+}
+
+.location-anuncio {
+    display: flex;
+    align-items: start;
+}
+
+.location-anuncio img {
+    height: 30px;
+}
+
+.location-anuncio .location-title {
+    color: #999999;
+    font-family: "DM Serif Text", serif;
+    font-size: 20px;
+    padding-top: 6px;
+}
+
+/*Dia posteado y boton guardar*/
+
+.date-posted-area {
+    flex: 1;
+    padding-top: 20px;
+}
+
+.date-posted {
+    display: flex;
+    font-family:'Times New Roman', Times, serif;
+    color: #000;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.date-posted-publicado {
+    margin-right: 5px;
+}
+
+.date-posted-button {
+    display: flex;
+    justify-content: center;
+}
+
+
+.prueba {
+    background-color: red;
+}
+
+
+
+.save-button {
+  background-color: #222;
+  border-radius: 4px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
+  max-width: none;
+  min-height: 44px;
+  min-width: 10px;
+  outline: none;
+  overflow: hidden;
+  padding: 9px 20px 8px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.save-button:hover,
+.save-button:focus {
+  opacity: .90;
+  color: #008000;
+}
+
+.favorite-logo {
+    height: 30px;
+}
+
+/*----SECCION DE DESCRIPCION DEL ANUNCIO:----*/
+
+.anuncio-caracteristicas {
+
+    margin-top: 15px;
+    padding: 16px;
+    border: 1px solid #e6e2e2;
+    border-radius: 6px;
+    width: 620px;
+}
+
+.caract-title {
+
+    font-size: 20px;
+    font-family: helvetica, sans-serif;
+    font-weight: bold;
+    margin-bottom: 10px;
+
+}
+
+.caract-details-container {
+
+    display: flex;
+}
+
+.caract-container-a {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 10px;
+}
+
+
+.caract-container-unidad {
+    display: flex;
+    align-items: center;
+}
+
+.caract-unidad {
+    display: flex;
+    align-items: center;
+    color: #565959;
+    font-family: helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    flex: 1;
+}
+
+.caract-icons {
+    height: 30px;
+    margin-right: 5px;
+}
+
+.caract-unit-result {
+    font-size: 17px;
+    font-weight: bold;
+    font-family: helvetica, sans-serif;
+    color: #3b4144;
+    flex: 0.5;
 }
