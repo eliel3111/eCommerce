@@ -1,3 +1,37 @@
+loadCities();
+
+
+
+//EVENT: Manejando click en el menu de celulares:
+
+const toggleMenuBtn = document.getElementById("movil-menu-button");
+const sidePanel = document.getElementById("sidePanel");
+
+let isMenuOpen = false;
+
+toggleMenuBtn.addEventListener("click", (e) => {
+  e.stopPropagation(); // evita que el clic propague
+  sidePanel.classList.toggle("hidden");
+  isMenuOpen = !isMenuOpen;
+  // Esperar un frame para que CSS registre el cambio de display
+  requestAnimationFrame(() => {
+    sidePanel.classList.toggle("visible");
+  });
+
+});
+
+document.addEventListener("click", function (event) {
+
+  // Verifica si el clic fue **afuera de divA**
+  if (!sidePanel.contains(event.target) && isMenuOpen) {
+    sidePanel.classList.toggle("hidden");
+    isMenuOpen = false;
+    // Esperar un frame para que CSS registre el cambio de display
+    requestAnimationFrame(() => {
+    sidePanel.classList.toggle("visible");
+  });
+  }
+});
 const segments = document.querySelectorAll('.segment');
 let selectedType = "Todos";
 console.log(segments);
@@ -104,6 +138,7 @@ console.log(segments);
       console.log("Modal Boton Cerrar");
       //Para que aparezca el container de los sectores
       closingInputCiudad();
+      closingInputSector();
     });
 
     // También puedes cerrar el modal si haces clic fuera del contenido
@@ -113,31 +148,25 @@ console.log(segments);
         console.log("Click Afuera del Modal");
         //Para que aparezca el container de los sectores
         closingInputCiudad();
+        closingInputSector();
       };
     });
 
 // MANEJANDO "LOCATION" City Input--------------------------------------
 
     const divA = document.getElementById("divA");
-
     const containerCity = document.getElementById("containerCity");
 
-    let cities = []; // aquí se guardarán los datos
+    let cities = []; 
+    let allLocation = {}; // aquí se guardarán los datos
     let citySelected = "";
 
-fetch("/api/cities")
-  .then(response => response.json())
-  .then(data => {
-    cities = Object.keys(data); // guardar los datos en el array
-    //console.log(data["Distrito Nacional"]);
-  })
-  .catch(error => {
-    console.error("Error al obtener ciudades:", error);
-  });
+
 
     //Variable control para saber si el input para filtrar las ciudad
     //esta creado o no
     let inputCreated = false;
+    let sectorCreated = false;
 
 //EVENT: para cuando le de click a seleccionar ciudad, Se crea
 // un input, una lista con ciudades.
@@ -154,8 +183,10 @@ fetch("/api/cities")
         };
         return;
       };
+      sectorCreated ? closingInputSector() : null;
       //Para eliminar el container de los sectores
       containerSector.style.display = 'none';
+      
 
       const input = document.createElement("input");
       input.type = "text";
@@ -213,6 +244,102 @@ fetch("/api/cities")
           };
 
         });
+    });
+
+
+//EVENT: Sector
+
+    const divB = document.getElementById("divB");
+    const sectorContainer = document.getElementById("containerSector");
+
+    //let cities = []; // aquí se guardarán los datos
+    let sectorSelected = "";
+    let sectors = []; // aquí se guardarán los sectores
+    
+
+
+    divB.addEventListener("click", () => {
+      if (sectorCreated) {
+        sectorCreated = false;
+        const inputCity = document.getElementById("sectorInput");
+        const listCity = document.getElementById("sectorList");
+        //Para que aparezca el container de los sectores
+
+        if (inputCity) {
+          inputCity.remove(); // elimina directamente el elemento
+          listCity.remove();
+        };
+        return;
+      };
+
+
+      const sectorSel = allLocation[citySelected];
+
+      if (sectorSel) {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.id = "sectorInput";
+      sectorContainer.appendChild(input);
+
+      setTimeout(() => {
+        input.focus();
+        }, 100);
+      
+
+      const ul = document.createElement("ul");
+      ul.id = "sectorList";
+
+      //agregar ciudades
+      sectorSel.forEach((city, index) => {
+        const li = document.createElement("li");
+        li.textContent = city;
+        li.className = "ciudades-busqueda";
+        li.id = "ciudad" + index;
+        ul.appendChild(li);
+        });
+
+      sectorContainer.appendChild(ul);
+      sectorCreated = true;
+
+            //event listener para filtrar
+        input.addEventListener("input", () => {
+          const filterText = input.value.trim().toLowerCase();
+        
+              const listItems = ul.querySelectorAll("li");
+              listItems.forEach(item => {
+                let itemFiltered = item.innerText.toLowerCase();
+                if (itemFiltered.includes(filterText) || filterText === "") {
+                  item.style.display = "block";
+                } else {
+                  item.style.display = "none";
+                }
+              });
+        });
+
+        //EVENT: Click a seleccionar ciudad, Se optiene el elemento de la lista
+    // seleccionado.
+        const citiesList = document.getElementById("sectorList");
+        citiesList.addEventListener("click", (e) => {
+
+          if (e.target.classList.contains("ciudades-busqueda")) {
+            const formCity = document.getElementById("sector-busqueda");
+            formCity.value = e.target.innerText;
+            sectorSelected = e.target.innerText;
+            closingInputSector()
+            const selectCity = document.getElementById("sectorButton");
+            selectCity.innerText = e.target.innerText;
+          };
+
+        });
+    } else {
+      console.log(false);
+    };
+      
+
+
+
+
+    
     });
 
 
@@ -382,4 +509,34 @@ function formatearInput(input, setValor) {
         };
         return;
         };
+  };
+
+  function closingInputSector() {
+    containerSector.style.display = 'block';
+    if (sectorCreated) {
+        sectorCreated = false;
+        const inputCity = document.getElementById("sectorInput");
+        const listCity = document.getElementById("sectorList");
+        if (inputCity) {
+          inputCity.remove(); // elimina directamente el elemento
+          listCity.remove();
+        };
+        return;
+        };
+  };
+
+
+
+  async function loadCities() {
+  try {
+    const response = await fetch("/api/cities");
+    const data = await response.json();
+
+    cities = Object.keys(data);
+    allLocation = data;
+
+    console.log("Todo cargado:", allLocation);
+  } catch (error) {
+    console.error("Error al obtener ciudades:", error);
   }
+}

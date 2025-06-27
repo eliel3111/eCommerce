@@ -1,6 +1,13 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
 body {
     margin: 0px;
-    margin-bottom: 100px;
+    margin-bottom: 0px;
 }
 
 :root {
@@ -22,6 +29,7 @@ svg{font-weight:bold;max-width:600px;height:100%;}
     display: flex;
     height: 75px;
     margin-top: 0px;
+    border-bottom: 1px solid #212121;;
 }
 
 
@@ -31,37 +39,52 @@ svg{font-weight:bold;max-width:600px;height:100%;}
 }
 
 .nav-bar-area {
-    flex: 7;
+    flex: 8;
     display: flex;
+
 }
+
+
+
 .logo {
-    width: 150px;
     display: flex;
     align-items: center;
     font-size: 24px;
     font-weight: bolder;
     color: white;
 }
+
+.nav-bar-right {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.hidden {
+    display: none;
+}
+
 .search-bar-area {
     display: flex;
-    width: 700px;
 }
+
+.user-bar-area {
+    display: flex;
+}
+
+.icono-web-nav {
+    display: none;
+  }
+
 .form-search {
     display: flex;
     align-items: center;
 }
 
-.search-input {
- width: 580px;
- margin-left: 15px;
- height: 25px;
- padding: 8px 10px 8px 16px;
- outline: none;
- border: none;
- border-top-left-radius: 6px;
- border-bottom-left-radius: 6px;
- font-size: 15px;
-}
+
 
 .submit-button {
     background-color: #1d477a;
@@ -175,16 +198,18 @@ de tus suenos*/
 }
 
 .segmented-control {
-    display: inline-flex;
+    display: flex;
     border: 1px solid #f9f9f9;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     overflow: hidden;
     background: #212121;
+    width: 300px;
   }
   
   .segmented-control .segment {
     padding: 10px 20px;
+    width: 100px;
     background: transparent;
     border: none;
     color: #f9f9f9;
@@ -207,6 +232,8 @@ de tus suenos*/
   
   .title-search-div-a {
     width: 500px;
+    display: flex;
+    flex-direction: column;
   }
 
 .title-search-div-b {
@@ -459,12 +486,21 @@ de tus suenos*/
     z-index: 1000;
 }
 
-.modal-city-label {
+.modal-city-label, .modal-title-label {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 17px;
-    margin-top: 15px;
     padding: 10px;
 }
+
+.modal-title-label {
+    font-size: 25px;
+    padding-top: 0px;
+    border-bottom: 3px solid var(--main-color);
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #212121;
+}
+
 .ashley {
     background-color: red;
 }
@@ -473,10 +509,23 @@ de tus suenos*/
       border: 1px solid #ccc;
       padding: 20px;
       width: 360px;
-      
+      padding-top: 0px;
+      border-radius: 10px;
     }
 
-    #divA {
+#containerSector {
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 360px;
+    padding-top: 0px;
+    border-radius: 10px;
+    margin-top: 10px;
+    background-color: white;
+    position: relative;
+    z-index: 1001;
+}    
+
+    #divA, .modal-city-container {
         display: flex;
         justify-content: space-between;
         padding: 10px;
@@ -500,13 +549,14 @@ de tus suenos*/
         background-color: #d1d1d1;
     }
 
-    #cityButton {
+    #cityButton, #sectorButton {
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 17px;
         color: #212121;
     }
 
-    #cityInput {
+    #cityInput,
+    #sectorInput {
         margin-top: 10px;
         padding: 10px;
         width: 337px;
@@ -517,34 +567,45 @@ de tus suenos*/
         font-size: 15px;
     }
 
-    #cityInput:focus {
+    #cityInput:focus, {
         border: 2px solid #b99a32; /* azul al hacer focus */
         box-shadow: 0 0 5px rgba(185, 154, 50, 0.6); /* sombra con #b99a32 en RGBA */
     }
 
-    #cityList {
-      margin-top: 10px;
-      list-style: none;
-      padding-left: 0px;
-      display: flex;
-      flex-direction: column;
-      height: 250px;
-      overflow-y: auto; /*Habilita el scroll vertical*/
-    }
+    #cityList,
+#sectorList {
+  margin-top: 10px;
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
 
-    #cityList li {
-      padding: 15px 10px;
-      cursor: pointer;
-    }
+#cityList {
+  height: 250px;
+}
+
+#sectorList {
+  height: 190px;
+}
+
+#cityList li,
+#sectorList li {
+  padding: 15px 10px;
+  cursor: pointer;
+}
+
 
 #modalContent {
     width: 400px;
-    height: 500px;
+    height: 540px;
     background-color: white;
     padding: 20px;
     box-shadow: 0   0   10px    rgba(0, 0, 0, 0.3);
     position: relative;
     border-radius: 10px;
+    padding-top: 10px;
 }
 
 #closeModalBtn {
@@ -566,10 +627,30 @@ de tus suenos*/
 
 }
 
+.fixed-save-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  transition: background-color 0.2s ease;
+}
+
+.fixed-save-btn:hover {
+  background-color: #8c7527;
+}
+
 .span-inmuebles {
     margin-left: 40px;
     margin-right: 10px;
-    font-size: 15px;
+    font-size: 17px;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -950,3 +1031,259 @@ de tus suenos*/
     color: #3b4144;
     flex: 0.5;
 }
+
+@media (max-width: 768px) {
+
+    body, html {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    }
+
+  .nav-bar-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    padding: 10px;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+  }
+
+  
+
+  .nav-bar-area {
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    flex: 1;
+  }
+
+  .logo {
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    font-size: 20px;
+  }
+
+  .nav-bar-right {
+    justify-content: flex-end;
+    flex: 1;
+  }
+
+
+
+  .search-bar-area,
+  .user-bar-area {
+    display: none;
+  }
+
+  .icono-web-nav {
+    display: flex;
+    justify-content: flex-end;  /* Centra horizontalmente */
+    align-items: center;      /* Centra verticalmente */
+    margin-right: 3px;
+  }
+
+    .icono-web-nav svg {
+    width: 24px;   /* Tamaño del ícono */
+    height: 24px;
+    stroke: #FFFFFF; /* Color de la línea */
+  }
+
+  #sidePanel {
+  position: fixed;
+  top: 50px; /* ajusta según la altura de tu header */
+  left: 50px;
+  right: 0;
+  bottom: 0;
+  background-color: lightcoral; /* o cualquier color de fondo */
+  transform: translateX(100%) translateY(-0%);
+  z-index: 999;
+  transition: all 0.4s ease;
+  opacity: 0;
+}
+
+#sidePanel.visible {
+    transform: translateX(-0%) translateY(-0%);
+    opacity: 1;
+}
+
+/* ocultar panel */
+.hidden {
+  display: none;
+}
+
+
+  .iniciar-sesion,
+  .nav-yellow-botton {
+    margin-top: 10px;
+    width: 90%;
+    justify-content: center;
+  }
+
+  .yellow-botton {
+    display: none;
+    width: 100%;
+    text-align: center;
+  }
+
+
+.home-page-area {
+    height: 500px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+}
+
+.space-home, .space-anuncio {
+    display: none;
+}
+
+.home-bar-area {
+  display: flex;
+  position: relative;
+  height: 100%;
+  flex-direction: column;
+  background-image: url('../images/home.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%; /* ✅ Ocupa todo el ancho disponible */
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 20%;
+  border-radius: 0px;
+}
+
+
+.home-bar-area::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0;
+    z-index: 1;
+}
+
+
+/*Encuentra el hogar
+de tus suenos*/
+.big_title {
+    font-size: 30px;
+    display: flex;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    color: #eac23c;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    margin-top: 60px;
+    line-height: 1;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.big_title br {
+    display: none;
+}
+
+.title-search-div-a {
+    display: flex;
+    background-color: lightgreen;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    flex-direction: column;
+    top: 200px;
+    padding: 10px;
+    align-items: center;
+  }
+
+  .segmented-control {
+    display: flex;
+    border-radius: 5px;
+  }
+
+  .segmented-control .selected {
+    background: var(--main-color);
+    color: #f9f9f9;
+    font-size: 18px;
+  }
+
+  .title-search-div-c {
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+    width: 100%;
+  }
+
+  .segment {
+    display: flex;
+    font-size: 16px;
+  }
+
+  .title-search-div-b {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+.eliel {
+    z-index: 2;
+    width: 400px;
+    height: 600px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+  .space {
+    display: none;
+  }
+
+  .space-home {
+    display: none;
+  }
+
+  .div-b {
+    display: flex;
+  }
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+

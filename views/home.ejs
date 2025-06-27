@@ -1,6 +1,17 @@
-<%- include("partials/header.ejs")%>
-
-<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
+    <title>E-Commerce</title>
+</head>
+<body >
+  <%- include("partials/header.ejs")%>
   <!-- Tooltip shown when clicking the property type button -->
                       <div id="modalOverlay" >
                         <div id="modalContent">
@@ -11,13 +22,12 @@
                               <line x1="16" y1="4" x2="4" y2="16" stroke="#b99a32" stroke-width="2"/>
                             </svg>
                             </div>
-
-                            <div>Cerrar</div>
                           </button>
 
-                          <div class="modal-city-label">Ciudad:</div>
+                          <div class="modal-title-label">Eliga su Ubicacion:</div>
 
                           <div id="containerCity">
+                            <div class="modal-city-label">Ciudad:</div>
                             <div id="divA">
                               <div id="cityButton">Seleccionar</div>
                               <div class="div-inmmuebles">
@@ -28,19 +38,28 @@
                             </div>
                           </div>
 
-                          <div class="modal-city-label">Ciudad:</div>
+                          <div id="containerSector">
+                            <div class="modal-city-label">Sector:</div>
+                            <div id="divB" class="modal-city-container">
+                              <div id="sectorButton">Seleccionar</div>
+                              <div class="div-inmmuebles">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="15" height="15" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                </svg>                   
+                              </div>
+                            </div>
+                          </div>
 
-                          <div id="containerSector" class="ashley">PRUEBA</div>
+                          <button class="fixed-save-btn">Guardar</button>
                         </div>
                       </div>
-  <% console.log(locals.content) %>
   <div class="home-page-area">
     <!--Espacio en los lados-->
       <div class="space-home"></div>
     <!--Aera del centro de la paguina-->
       <div id="homeBarArea" class="home-bar-area">
         <div class="eliel">
-          <h1 class="big_title">Encuentra el hogar <br> de tus suenos</h1>
+          <h1 class="big_title">Encuentra el hogar <br> de tus Suenos!</h1>
         
         
           <div class="title-search-div-a">
@@ -247,3 +266,4 @@
     
   </script>
 </body>
+</html>
