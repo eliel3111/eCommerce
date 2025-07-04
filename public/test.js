@@ -1,3 +1,4 @@
+
 loadCities();
 
 
@@ -49,7 +50,7 @@ console.log(segments);
 });
 
 // MANEJANDO CLICK EN EL BOTON DE BUSQUEDA DE TIPO DE PROPIEDAD
-
+  let openToolPrice = false;
   const btn = document.getElementById('tooltipBtn');
   const tooltipType = document.getElementById('tooltipType');
   handleTooltip(btn, tooltipType);
@@ -59,6 +60,16 @@ console.log(segments);
   const btnPrice = document.getElementById('tooltipBtnPrice');
   const tooltipPrice = document.getElementById('tooltipPrice');
   handleTooltip(btnPrice, tooltipPrice);
+
+  const closeToolPrice = document.getElementById('tooltipPriceX');
+
+  closeToolPrice.addEventListener("click", (event) => {
+    setTimeout(() => {
+      console.log("Trying to close price tooltip");
+    tooltipPrice.style.display = 'none';
+    openToolPrice = false;
+    }, 300)
+  });
 
 // MANEJANDO SELECCION DE MODENA------------------------------------
   // Obtener referencias a los elementos del DOM
@@ -343,9 +354,63 @@ console.log(segments);
     });
 
 
+    // EVENT: Para guardar la ciudad y que se vea en el menu de filtro principal
+    const locationSaveButton = document.getElementById("locationSaveButton");
+
+    locationSaveButton.addEventListener("click", () => {
+      handleLocationSelected("cityButton");
+
+      //Codigo para cerrar modal
+      modalOverlay.style.display = 'none'; // Ocultar el modal
+      console.log("Modal Boton Cerrar");
+      //Para que aparezca el container de los sectores
+      closingInputCiudad();
+      closingInputSector();
+    });
 
 
+/*EVENT PARA QUE CUANDO PROPIEDADES DESTACADAS ES HOVER O CLICK
+SE OFRESCA LOS SERVICIOS*/
+    const infoDestacados = document.getElementById("infoDestacados");
+    const infoDestacadosToolTip = document.querySelector(".tooltip-anuncio");
+    const btnClosDestacados = document.querySelector(".btn-cerrar");
+    let infoDestacadosOpen = false;
+    
+    function openingDestacados() {
+      if (!infoDestacadosOpen) {
+        infoDestacadosToolTip.style.display = "flex";
+        infoDestacadosOpen = !infoDestacadosOpen;
+      };
+    };
 
+    function closingDestacado() {
+      if (infoDestacadosOpen) {
+      infoDestacadosToolTip.style.display = "none";
+        infoDestacadosOpen = !infoDestacadosOpen;
+      };  
+    };
+
+    // Maneja tanto mouseenter como click con una sola función
+    const abrirInfo = () => {
+      setTimeout(openingDestacados(), 300);
+    };
+
+    const cerrarInfo = () => {
+      setTimeout(closingDestacado(), 300);
+    };
+
+    // Eventos
+    infoDestacados.addEventListener("mouseenter", abrirInfo);
+    infoDestacados.addEventListener("click", abrirInfo);
+    btnClosDestacados.addEventListener("click", cerrarInfo);
+
+    document.addEventListener("click", (event) => {
+      if (infoDestacadosOpen === true && event.target.id !== "toolAnuncio" && event.target.id !== "infoDestacados") {
+        closingDestacado(infoDestacadosOpen);
+      };
+    });
+
+    
 
 
 
@@ -356,9 +421,19 @@ function handleTooltip(btn, tooltip) {
 let mouseInside = false;
 let entered;
 
+
 // Mostrar tooltip al hacer clic
-btn.addEventListener('click', () => {
-  tooltip.style.display = 'block';
+btn.addEventListener('click', (event) => {
+  if (openToolPrice === true && btn.id === "tooltipBtnPrice") {
+    return;
+  } else if (openToolPrice === true && btn.id === "tooltipBtn") {
+    tooltip.style.display = 'none';
+    entered = false;
+    openToolPrice =  false;
+  } else {
+    tooltip.style.display = 'block';
+    openToolPrice = true;
+  }
 });
 
 // Marcar si el mouse está dentro del botón o del tooltip
@@ -366,6 +441,7 @@ function setInside(value) {
   mouseInside = value;
   if (!mouseInside) {
     tooltip.style.display = 'none';
+    openToolPrice = false;
   }
 }
 
@@ -433,6 +509,30 @@ function handleTypeTool(id) {
 
 };
 
+// FUNCTION: Guarda el Location en el Span Location usando el valor 
+// de la ciudad seleccionada solamente.
+
+function handleLocationSelected(id) {
+  // Get the selected text from the clicked element
+  let selected = document.getElementById(id).innerText;
+  console.log(selected);
+
+  if (selected === "Seleccionar") {
+    return;
+  };
+  /* Set the value of the hidden input for search
+  document.getElementById('tipo-inmueble-busqueda').value = selected;*/
+
+  // Truncate the label if it's too long
+  if (selected.length > 12) {
+    selected = selected.substring(0, 9) + "...";
+  }
+
+  // Update the visible span element with truncated text
+  const typeInmueble = document.querySelectorAll(".span-inmuebles")
+  typeInmueble[2].innerText = selected;
+
+};
 
 // FUNCTION: 
 

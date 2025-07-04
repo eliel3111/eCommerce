@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+/*pARA ELIMINAR EL SELECCION TOUCH AZUL*/
+a, button, div {
+    -webkit-tap-highlight-color: transparent;
+}
+
 
 body {
     margin: 0px;
@@ -131,8 +136,9 @@ svg{font-weight:bold;max-width:600px;height:100%;}
 }
 .yellow-botton:hover {
     transform: translate(-2px);
-    background-color: #1e7e34;
-    color: #F1F1F1;
+    background-color: var(--secondary-color);
+    color: #212121;
+    font-weight: bold;
 }
 
 .yellow-botton:active {
@@ -231,7 +237,7 @@ de tus suenos*/
   }
   
   .title-search-div-a {
-    width: 500px;
+    width: 570px;
     display: flex;
     flex-direction: column;
   }
@@ -362,13 +368,17 @@ de tus suenos*/
 
 .tool-price-moneda {
     margin-left: 15px;
+    padding-right: 15px;
     padding-top: 10px;
     font-weight: bold;
     font-size: 15px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .tool-price-moneda-options {
     justify-content: center;
+    display: flex;
 }
 
 .tool-price-moneda-rd {
@@ -376,7 +386,7 @@ de tus suenos*/
     padding: 10px;
     font-size: 16px;
     font-weight: bold;
-    width: 40px;
+    width: 20%;
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -387,7 +397,7 @@ de tus suenos*/
     padding: 10px;
     font-size: 16px;
     font-weight: bold;
-    width: 40px;
+    width: 20%;
     margin-left: 5px;
     border-radius: 5px;
 }
@@ -567,20 +577,20 @@ de tus suenos*/
         font-size: 15px;
     }
 
-    #cityInput:focus, {
+    #cityInput:focus {
         border: 2px solid #b99a32; /* azul al hacer focus */
         box-shadow: 0 0 5px rgba(185, 154, 50, 0.6); /* sombra con #b99a32 en RGBA */
     }
 
     #cityList,
-#sectorList {
-  margin-top: 10px;
-  list-style: none;
-  padding-left: 0;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-}
+    #sectorList {
+    margin-top: 10px;
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    }
 
 #cityList {
   height: 250px;
@@ -648,7 +658,7 @@ de tus suenos*/
 }
 
 .span-inmuebles {
-    margin-left: 40px;
+    margin-left: 20px;
     margin-right: 10px;
     font-size: 17px;
     font-family: 'Roboto', sans-serif;
@@ -658,6 +668,7 @@ de tus suenos*/
     display: flex;
     justify-content: center;
     align-items: end;
+    margin-left: auto;
 }
 .details-search-button {
     width: 100%;
@@ -690,6 +701,42 @@ de tus suenos*/
     color: #565959;
     font-size: 14px;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/*BOTON DE BUSQUEDA PRINCIPAL DE HOME EJS*/
+
+
+.search-main-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  padding: 12px 20px;
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.search-main-btn .icon {
+  stroke: white;
+}
+
+.search-main-btn:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+.search-main-btn:active {
+  background-color: #701010;
+  transform: translateY(0);
 }
 
 /*GRID HOME EJS SECTION*/
@@ -1032,6 +1079,180 @@ de tus suenos*/
     flex: 0.5;
 }
 
+/*SECCION DEL GRID DE ANUNCIOS*/
+
+.contenedor-grid {
+  display: flex;
+  width: 100%;
+  margin-top: 30px;
+  box-sizing: border-box;
+}
+
+.space-grid-home {
+  width: 10%;
+  background-color: lightblue;
+  padding: 10px;
+  text-align: center;
+}
+
+.grid-center-area {
+  width: 80%;
+  display: flex;
+  flex-direction: column; /* <-- Muy importante */
+  background-color: lightcoral;
+  padding: 10px;
+  height: 100vh;
+}
+
+.titulo-destacados,
+.grid-anuncios {
+  width: 100%; /* <-- Esto asegura que usen todo el ancho de div-b */
+  background-color: white;
+  margin-bottom: 10px; /* Solo para que se separen visualmente */
+  padding: 10px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.titulo-destacados {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 10px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.title-text {
+  padding-left: 15px;
+}
+
+.info-icon {
+  width: 22px;
+  height: 22px;
+  background-color: #b99a32; /* dorado suave */
+  color: white;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  transition: background-color 0.3s ease;
+}
+
+.info-icon:hover {
+  background-color: #a28529;
+}
+
+/*Tool tip para anuncios destacados*/
+
+.tooltip-anuncio {
+  display: none;
+  position: absolute;
+  left: 300px;
+  bottom: 25px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f1f1f1;
+  border: 2px solid var(--main-color);
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  padding: 20px;
+  width: 300px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  z-index: 1000;
+}
+
+.btn-cerrar {
+  position: absolute;
+  top: 0;
+  right:0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.btn-cerrar svg {
+  display: block;
+}
+.mensaje-principal {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.contacto-whatsapp {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.whatsapp-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.boton-container {
+  width: 100%;
+}
+
+.whatsapp-btn {
+  display: inline-block;
+  text-align: center;
+  background-color: #25d366;
+  color: #212121;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  text-decoration: none;
+  font-weight: bold;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+  background-color: #1ebe5d;
+}
+
+
+/*AREA GRID ANUNCIOS: */
+
+.grid-anuncios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 10px;
+  grid-template-areas:
+    x x x;
+}
+
+/* Todos los divs tienen la misma clase: .item */
+/* Ahora les asignamos sus áreas usando nth-child */
+
+
+
+
+/* Opcional: estilo común a todos */
+.item {
+  padding: 10px;
+  text-align: center;
+  background-color: #008000;
+}
+
+
 @media (max-width: 768px) {
 
     body, html {
@@ -1195,13 +1416,17 @@ de tus suenos*/
 
 .title-search-div-a {
     display: flex;
-    background-color: lightgreen;
+    background-color: #21212185;
+    border-radius: 15px;
     width: 100%;
     height: 100%;
     position: absolute;
     flex-direction: column;
     top: 200px;
     padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
     align-items: center;
   }
 
@@ -1219,8 +1444,10 @@ de tus suenos*/
   .title-search-div-c {
     display: flex;
     flex-direction: column;
-    background-color: red;
     width: 100%;
+    flex: 1;
+    /*border: 3px solid #999999;*/
+    margin-top: 5px;
   }
 
   .segment {
@@ -1243,6 +1470,9 @@ de tus suenos*/
     flex-direction: column;
 }
 
+.details-search-button {
+    flex: 1;
+}
 
 
   .space {
@@ -1255,15 +1485,142 @@ de tus suenos*/
 
   .div-b {
     display: flex;
+    border-radius: 15px;
   }
 
+  .div-b-a, .div-b-ab {
+    border-radius: 15px;
+    display: flex;
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 10px;
+  }
+
+  .span-inmuebles {
+    font-size: 18px;
+    padding: 20px;
+    margin-left: 10px;
+  }
+
+  .div-inmmuebles {
+    margin-left: auto;
+  }
+
+  .tooltip-type {
+    position: absolute;
+    top: 80px;
+    left: 25px;
+}
   
+.tooltip-price {
+    position: absolute;
+    top: -225px;
+    left: 25px;
+}
+
+.search-main-btn {
+  display: inline-flex;
+  position: absolute;
+  top: 520px;
+  left: 90px;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  padding: 12px 20px;
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
 
+/*SECCION DEL GRID DE ANUNCIOS*/
+
+.contenedor-grid {
+  display: flex;
+  width: 100%;
+  margin-top: 200px;
+  box-sizing: border-box;
+}
+
+.space-grid-home {
+  width: 0%;
+  padding: 0px;
+}
+
+.grid-center-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column; /* <-- Muy importante */
+  background-color: lightcoral;
+  padding: 10px;
+}
+
+.titulo-destacados,
+.grid-anuncios {
+  width: 100%; /* <-- Esto asegura que usen todo el ancho de div-b */
+  background-color: white;
+  margin-bottom: 10px; /* Solo para que se separen visualmente */
+  padding: 10px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.titulo-destacados {
+    justify-content: center;
+}
+
+/*Icono de info para anuncios destacados*/
+.info-icon {
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
+  background-color: #b99a32; /* dorado suave */
+  color: white;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  transition: background-color 0.3s ease;
+}
+
+.tooltip-anuncio {
+  display: none;
+  position: absolute;
+  bottom: 45px;
+  left: 45px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f1f1f1;
+  border: 2px solid var(--main-color);
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  padding: 20px;
+  width: 300px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  z-index: 1000;
+}
 
 
+/*GRID DE ANUNCIOS DESTACADOS*/
 
-
+  .grid-anuncios {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "x"
+      "x"
+      "x";
+  }
 
 
 

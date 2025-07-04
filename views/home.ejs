@@ -50,7 +50,7 @@
                             </div>
                           </div>
 
-                          <button class="fixed-save-btn">Guardar</button>
+                          <button id="locationSaveButton" class="fixed-save-btn">Guardar</button>
                         </div>
                       </div>
   <div class="home-page-area">
@@ -97,7 +97,7 @@
 
                       <!-- House icon -->
                       <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="#d1d1d1" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="#d1d1d1" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                           <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                         </svg>                        
                       </div>
@@ -125,7 +125,15 @@
                        <!-- Tooltip shown when clicking the property "PRICE"" button -->
                       <div id="tooltipPrice" class="tooltip-price" >
                         <div class="container-tool-price">
-                          <div class="tool-price-moneda">Moneda</div>
+                          <div class="tool-price-moneda">
+                            <div>Moneda</div>
+                            <div id="tooltipPriceX" class="closetooltipPrice-x">
+                              <svg width="24" height="24" viewBox="0 0 20 20">
+                              <line x1="4" y1="4" x2="16" y2="16" stroke="#b99a32" stroke-width="2"/>
+                              <line x1="16" y1="4" x2="4" y2="16" stroke="#b99a32" stroke-width="2"/>
+                              </svg> 
+                            </div>
+                          </div>
 
                           <div class="tool-price-moneda-options">
                             <div class="tool-price-moneda-rd tool-price-moneda-selected" id="toolPriceRd">$RD</div>
@@ -187,7 +195,7 @@
 
 
                       <!-- Label: Location -->
-                      <span class="span-inmuebles">Ubicacion</span>
+                      <span id="spanLocation" class="span-inmuebles">Ubicacion</span>
 
 
                       <!-- Dropdown arrow icon -->
@@ -218,12 +226,67 @@
               <input id="sector-busqueda" type="text" name="ubicacion" value="">
             </form>
           </div>
+          <button class="search-main-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14z" />
+            </svg>
+            Realizar Búsqueda
+          </button>
         </div>  
       </div>
       <!-- Extra space below the search section -->
       <div class="space-home"></div>
   </div>
+  <div class="contenedor-grid">
+  <div class="space-grid-home"></div>
 
+  <div class="grid-center-area">
+    <!--Anuncio Destacado-->
+    <div class="titulo-destacados">
+      <span class="title-text">Propiedades destacadas</span>
+      <div id="infoDestacados" class="info-icon" title="Estas son propiedades seleccionadas por su alta demanda.">!</div>
+      
+
+      <!--Tool tip de anuncio destacados-->
+      <div id="toolAnuncio" class="tooltip-anuncio">
+        <button id="btnCerrar" class="btn-cerrar" title="Cerrar">
+    <!-- Icono SVG de cerrar -->
+    <svg width="25" height="25" viewBox="0 0 20 20" fill="none" stroke="#b71c1c" stroke-width="2">
+      <line x1="4" y1="4" x2="16" y2="16" />
+      <line x1="16" y1="4" x2="4" y2="16" />
+    </svg>
+  </button>
+        <div class="mensaje-principal">¡Anuncia aquí y vende más rápido que nunca!</div>
+        <div class="contacto-whatsapp">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="whatsapp-logo">
+          <span>Contáctanos vía WhatsApp</span> — <strong>929-541-6787</strong>
+        </div>
+        <div class="boton-container">
+          <a
+          href="https://wa.me/19295416787?text=Hola,%20quiero%20anunciar%20mi%20propiedad"
+          target="_blank"
+          class="whatsapp-btn"
+          >
+          Enviar mensaje por WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="grid-anuncios">
+      <div class="item">.</div>
+      <div class="item">.</div>
+      <div class="item">.</div>
+      <div class="item">.</div>
+      <div class="item">.</div>
+      <div class="item">.</div>
+      <div class="item">.</div>
+      <div class="item">.</div>
+      <div class="item">.</div>
+    </div>
+  </div>
+
+  <div class="space-grid-home"></div>
+  </div>
 
 
 
