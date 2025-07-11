@@ -53,10 +53,15 @@ svg{font-weight:bold;max-width:600px;height:100%;}
 
 .logo {
     display: flex;
-    align-items: center;
+    align-items:flex-start;
     font-size: 24px;
     font-weight: bolder;
     color: white;
+}
+
+.home-logo {
+    height: 50px;
+    margin-top: 6px;
 }
 
 .nav-bar-right {
@@ -112,7 +117,7 @@ svg{font-weight:bold;max-width:600px;height:100%;}
 
 
 .iniciar-sesion, .nav-yellow-botton {
- color: #111116;
+ color: #F1F1F1;
  display: flex;
  justify-content: center;
  align-items: center;
@@ -121,10 +126,11 @@ svg{font-weight:bold;max-width:600px;height:100%;}
  font-weight: 500;
  font-size: 16px;
  cursor: pointer;
+ transition: color 0.2s ease-in-out;
 }
 
 .iniciar-sesion:hover {
-    color: #1e7e34;
+    color: var(--secondary-color);
 }
 
 .yellow-botton {
@@ -1086,22 +1092,20 @@ de tus suenos*/
   width: 100%;
   margin-top: 30px;
   box-sizing: border-box;
+  background-color: #F0F0F0;
 }
 
 .space-grid-home {
-  width: 10%;
-  background-color: lightblue;
+  width: 15%;
   padding: 10px;
   text-align: center;
 }
 
 .grid-center-area {
-  width: 80%;
+  width: 90%;
   display: flex;
   flex-direction: column; /* <-- Muy importante */
-  background-color: lightcoral;
   padding: 10px;
-  height: 100vh;
 }
 
 .titulo-destacados,
@@ -1112,6 +1116,7 @@ de tus suenos*/
   padding: 10px;
   text-align: center;
   box-sizing: border-box;
+  border-radius: 15px;
 }
 
 .titulo-destacados {
@@ -1234,7 +1239,7 @@ de tus suenos*/
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto auto auto;
-  gap: 10px;
+  gap: 15px;
   grid-template-areas:
     x x x;
 }
@@ -1251,6 +1256,130 @@ de tus suenos*/
   text-align: center;
   background-color: #008000;
 }
+
+.anuncio-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    height: 300px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+}
+
+.anuncio-image {
+    flex: 6;
+    overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.anuncio-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.anuncio-type {
+  position: absolute;
+  background-color: var(--main-color);
+  top: 5px;
+  left: 5px;
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  font-family: 'Roboto', sans-serif;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  white-space: nowrap; /* evita que el texto se divida */
+}
+
+.anuncio-type::first-letter {
+text-transform: uppercase;
+}
+
+.anuncio-details {
+  display: flex;
+  flex-direction: column;
+  flex: 4;
+}
+
+.anuncio-details div {
+  flex: 1;
+  padding-left: 7px;
+  text-align: left;
+}
+.anuncio-detail-price {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900; /* UltraBold */
+  font-size: 20px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.anuncio-detail-title {
+  font-weight: 400; /* o 700 para bold */
+  font-size: 17px;
+  margin-bottom: 3px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.anuncio-detail-specs {
+  font-size: 15px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+}
+
+.detail-specs {
+  font-weight: 100;
+}
+
+.anuncio-detail-location {
+  font-size: 14px;
+  color: #555;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+/*FOOTER*/
+
+.footer {
+  background-color: #222;
+  color: #eee;
+  padding: 20px 0;
+  font-family: Arial, sans-serif;
+}
+
+.container-footer {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-left h3 {
+  margin: 0 0 8px 0;
+  color: var(--secondary-color);
+}
+
+.footer-right a {
+  color: #eee;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-right a:hover {
+  color: var(--secondary-color);
+}
+
+
+
 
 
 @media (max-width: 768px) {
@@ -1288,6 +1417,11 @@ de tus suenos*/
     align-items: center;
     flex: 1;
     font-size: 20px;
+  }
+
+  .home-logo {
+    height: 40px;
+    margin-top: 0px;
   }
 
   .nav-bar-right {
@@ -1558,7 +1692,6 @@ de tus suenos*/
   width: 100%;
   display: flex;
   flex-direction: column; /* <-- Muy importante */
-  background-color: lightcoral;
   padding: 10px;
 }
 
@@ -1623,18 +1756,22 @@ de tus suenos*/
   }
 
 
+ /*FOOTER*/
 
-
-
-
-
-
-
-
-
-
-
-
+  .container-footer {
+    flex-direction: column;
+    text-align: center;
+    max-width: 100%;
+  }
+  .footer-right {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  .footer-right a {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 
 }
 

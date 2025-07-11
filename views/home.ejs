@@ -8,9 +8,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
+
+
     <title>E-Commerce</title>
 </head>
 <body >
+  <% console.log(locals.content); %>
   <%- include("partials/header.ejs")%>
   <!-- Tooltip shown when clicking the property type button -->
                       <div id="modalOverlay" >
@@ -273,20 +277,46 @@
       </div>
     </div>
     <div class="grid-anuncios">
-      <div class="item">.</div>
-      <div class="item">.</div>
-      <div class="item">.</div>
-      <div class="item">.</div>
-      <div class="item">.</div>
-      <div class="item">.</div>
-      <div class="item">.</div>
-      <div class="item">.</div>
-      <div class="item">.</div>
+      <% if (content.length > 0) { %>
+      <% content.forEach(inmueble => { %>
+        <div class="anuncio-container">
+
+          <div class="anuncio-image">
+            <img src=https://www.corotos.com.do/imagenes/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCSFdLcUFJPSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--9e7c08a788d06e39bab1e5272bd6cd92622d4b98/6_jpeg?variant_options%5Bformat%5D=webp&variant_options%5Bresize_to_fit%5D%5B%5D=1280&variant_options%5Bresize_to_fit%5D%5B%5D=720>
+          </div>
+
+          <div class="anuncio-type">
+            <%= inmueble.tipo_inmueble %>
+          </div>
+
+          <div class="anuncio-details">
+
+            <div class="anuncio-detail-price"><%= inmueble.moneda %>:<%= inmueble.precio %></div>
+
+            <div class="anuncio-detail-title"><%= inmueble.titulo %></div>
+
+            <div class="anuncio-detail-specs">
+              <%= inmueble.hab %> <span class="detail-specs">Hab:</span> - <%= inmueble.banos %> <span class="detail-specs">Ba:</span> - <%= inmueble.metros_cuadrados %> <span class="detail-specs">m²:</span> 
+            </div>
+
+            <div class="anuncio-detail-location">
+              <%= inmueble.ciudad %>, <%= inmueble.sector %>
+            </div>
+
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <li>No hay inmuebles disponibles.</li>
+    <% } %>
     </div>
   </div>
 
   <div class="space-grid-home"></div>
   </div>
+
+  <%- include("partials/footer.ejs")%>  
+
 
 
 

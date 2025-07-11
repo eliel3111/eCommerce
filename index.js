@@ -6,12 +6,13 @@ import ejs from "ejs"
 import axios from "axios";
 import bodyParser from "body-parser";
 import { log } from "async";
-import sectorsByCity from './data/sectorsByCity_FULL.js';
+import appRouter from './routes/appRouter.js';
 // =======================
 // 🚀 Server Configuration
 // =======================
 const app = express();
 const port = 3000;
+app.use(express.json()); // Parses incoming JSON
 
 // ==================================================================
 // 🛠 Axios Config
@@ -48,15 +49,12 @@ app.use(logger);
 // 🌐 Routes
 // ==================================================================
 
-// GET Home
-app.get("/", (req, res) => {
-    res.render("home.ejs", { noContent: "Waiting for data..." });
-  });
+app.use('/', appRouter);
 
-// Ruta para enviar las ciudades al frontend
+/* Ruta para enviar las ciudades al frontend
 app.get("/api/cities",async (req, res) => {
   res.json(sectorsByCity);
-});  
+});  */
 
 
   // POST Search
