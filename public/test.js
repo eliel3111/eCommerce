@@ -35,16 +35,20 @@ document.addEventListener("click", function (event) {
 });
 const segments = document.querySelectorAll('.segment');
 let selectedType = "Todos";
-console.log(segments);
+
   segments.forEach(btn => {
     btn.addEventListener('click', () => {
       segments.forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       selectedType = btn.innerHTML;
-
+      if (selectedType === "Compra") {
+        selectedType = "venta";
+      }; 
       //Esto es para lo que eligamos se vaya al input type-search para luego mandarlo en el form
-      document.getElementById('type-search').setAttribute("value", selectedType);
-      const typeSearch = document.getElementById('type-search');
+      if (selectedType !== "Todos") {
+        document.getElementById('type-search').setAttribute("value", selectedType.toLowerCase());
+        const typeSearch = document.getElementById('type-search');
+      };
       console.log("El usuario quiere buscar una propiedad tipo: " + selectedType);
     });
 });

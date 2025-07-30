@@ -1,5 +1,6 @@
 const sectorsByCity = {
   "Distrito Nacional": [
+    "Todos los sectores",
     "Arroyo Hondo Viejo",
     "30 de mayo",
     "Alfimar",
@@ -126,6 +127,7 @@ const sectorsByCity = {
     "Otros",
   ],
   "Santo Domingo Este": [
+    "Todos los sectores",
     "Alameda",
     "Alma Rosa I",
     "Alma Rosa II",
@@ -192,6 +194,7 @@ const sectorsByCity = {
     "Otros",
   ],
   "Santo Domingo Norte": [
+    "Todos los sectores",
     "La Victoria",
     "Sierra Prieta",
     "Av. Circunvalación, El Higüero",
@@ -222,6 +225,7 @@ const sectorsByCity = {
     "Otros",
   ],
   "Santo Domingo Oeste": [
+    "Todos los sectores",
     "Altos de Engombe",
     "Autop. 6 de Noviembre",
     "Autopista Duarte",
@@ -266,6 +270,7 @@ const sectorsByCity = {
     "Otros",
   ],
   "Santiago": [
+    "Todos los sectores",
     "Arroyo Hondo",
     "Av. Circunvalación",
     "Av. Circunvalación Norte",
@@ -336,6 +341,7 @@ const sectorsByCity = {
     "Zona Monumental",
   ],
   "Bavaro/PuntaCana": [
+    "Todos los sectores",
     "Bayahíbe",
     "Brisas",
     "Cabeza De Toro",
@@ -362,6 +368,7 @@ const sectorsByCity = {
     "Otros",
   ],
   "La Romana": [
+    "Todos los sectores",
     "Buena Vista Norte",
     "Caleta",
     "Casa de Campo",
@@ -376,6 +383,7 @@ const sectorsByCity = {
     "Otros",
   ],
   "Puerto Plata": [
+    "Todos los sectores",
     "Costa Dorada",
     "Luperón",
     "Playa Dorada",
@@ -386,6 +394,7 @@ const sectorsByCity = {
     "Otros",
   ],
   "Samana": [
+    "Todos los sectores",
     "Cosón",
     "El Limón",
     "El Portillo",
@@ -400,6 +409,7 @@ const sectorsByCity = {
     "Otros",
   ],
   "San Pedro de Macoris": [
+    "Todos los sectores",
     "Guayacanes",
     "Hemingway, Juan Dolio",
     "Juan Dolio",
@@ -419,6 +429,7 @@ const sectorsByCity = {
     "Otros",
   ],
   "Barahona": [
+    "Todos los sectores",
     "Cabral",
     "La Ciénaga",
     "Paraíso",

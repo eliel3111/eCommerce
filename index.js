@@ -7,6 +7,7 @@ import axios from "axios";
 import bodyParser from "body-parser";
 import { log } from "async";
 import appRouter from './routes/appRouter.js';
+import morgan from "morgan";
 // =======================
 // 🚀 Server Configuration
 // =======================
@@ -35,6 +36,9 @@ app.use(bodyParser.urlencoded({ extended:true}));
 
 // Custom logger middleware
 app.use(logger);
+
+//REMOVE IN PRODUCCION
+app.use(morgan("dev"));
 
 
 

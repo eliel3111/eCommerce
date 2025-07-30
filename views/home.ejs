@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -220,17 +220,17 @@
             
 
             <!-- Hidden form to store search values -->
-            <form style="display: none;">
-              <input id="type-search" type="hidden" name="inmuebles" value="">
+            <form id="formInmueble" action="/buscar-inmuebles" method="GET" style="display: none;">
+              <input id="type-search" type="hidden" name="tipo_inmueble" value="Todos">
               <input  value="" id="tipo-inmueble-busqueda" type="text" name="inmueble">
-              <input id="moneda-busqueda" type="text" name="moneda" value="">
+              <input id="moneda-busqueda" type="text" name="moneda" value="RD">
               <input id="min-precio-busqueda" type="number" name="minPrecio" value="">
               <input id="max-precio-busqueda" type="number" name="maxPrecio" value="">
               <input id="ciudad-busqueda" type="text" name="ubicacion" value="">
-              <input id="sector-busqueda" type="text" name="ubicacion" value="">
+              <input id="sector-busqueda" type="text" name="ubicacion" value="Todos los sectores">
             </form>
           </div>
-          <button class="search-main-btn">
+          <button type="submit" form="formInmueble"  class="search-main-btn">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14z" />
             </svg>

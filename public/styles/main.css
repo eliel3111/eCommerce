@@ -1,3 +1,6 @@
+/* bigshot one font */
+@import url(https://fonts.googleapis.com/css?family=Cabin+Condensed);
+
 *,
 *::before,
 *::after {
@@ -20,8 +23,7 @@ body {
   --secondary-color: #b99a32;
 }
 
-/* bigshot one font */
-@import url(https://fonts.googleapis.com/css?family=Cabin+Condensed);
+
 
 svg{font-weight:bold;max-width:600px;height:100%;}
 
@@ -154,6 +156,10 @@ svg{font-weight:bold;max-width:600px;height:100%;}
 
 .search-icon {
     height: 20px;
+}
+
+.movil-nav-box {
+  display: none;
 }
 
 /*DISENO DE HOME EJS*/
@@ -1455,16 +1461,90 @@ text-transform: uppercase;
   left: 50px;
   right: 0;
   bottom: 0;
-  background-color: lightcoral; /* o cualquier color de fondo */
+  background-color: #ffffff; /* o cualquier color de fondo */
   transform: translateX(100%) translateY(-0%);
   z-index: 999;
   transition: all 0.4s ease;
   opacity: 0;
+  display: flex;
+  flex-direction: column;
+  border: none;
 }
 
 #sidePanel.visible {
     transform: translateX(-0%) translateY(-0%);
     opacity: 1;
+}
+
+.movil-nav-box {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 2rem;
+  color: #212121;
+  border: none;
+  padding: 15px;
+  gap: 10px;
+  padding-left: 30px;
+}
+
+
+
+.movil-nav-box-inside {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 2rem;
+  background-color: #ffffff;
+  border: none;
+
+  padding-top: 10px;   /* Top padding */
+  padding-bottom: 10px; /* Bottom padding */
+  border-radius: 40px;
+}
+
+.movil-nav-icon-container {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+  color: inherit;
+}
+.movil-nav-icon {
+  width: 50px;
+  height: 50px;
+  color: inherit;
+}
+.a {
+  background-color: #b0b0b0;
+  gap: 1rem;
+  font-family: 'Roboto', sans-serif;
+  padding-left: 30px;
+}
+.movil-nav-box:active {
+  background-color: var(--main-color);
+  color: #ffffff;
+} 
+
+
+.movil-nav-option-text {
+  font-family: 'Roboto', sans-serif;
+  color: inherit;
+  font-size: 1.5rem;
+}
+
+.foto-usuario {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nombre-usuario {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 /* ocultar panel */
