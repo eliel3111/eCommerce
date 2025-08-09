@@ -8,12 +8,29 @@ import bodyParser from "body-parser";
 import { log } from "async";
 import appRouter from './routes/appRouter.js';
 import morgan from "morgan";
+import session from 'express-session';
+import passport from 'passport';
+import flash from "connect-flash";
 // =======================
 // 🚀 Server Configuration
 // =======================
 const app = express();
 const port = 3000;
 app.use(express.json()); // Parses incoming JSON
+
+
+app.use(
+    session({
+        secret: "TOPSECRETWORD",
+        resave: false,
+        saveUninitialized: true,
+    })
+); 
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
 
 // ==================================================================
 // 🛠 Axios Config

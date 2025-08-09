@@ -226,6 +226,185 @@ body {
       font-weight: bold;
       text-decoration: none;
     }
+
+  /* DISENO PARA PAGUINA LOGIN*/
+
+
+  .login-nav-container {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 13rem;
+  background-color: #2B2A27;
+  z-index: 999;
+}
+
+
+  .login-container {
+      background-color: #f0f0f0;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      width: 100%;
+      max-width: 400px;
+      height: 450px;   
+      animation: fadeSlide 0.6s ease-out;
+    }
+
+    .login-error {
+      color: var(--main-color);
+      font-family: var(--fuente-principal);
+      background-color: #f8d7da;   /* Light red/pink background */
+      color: #842029;              /* Dark red text */
+      border: 1.5px solid #f5c2c7; /* Soft red border */
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      box-shadow: 0 2px 6px rgba(255, 0, 0, 0.15);
+      max-width: 400px;
+      margin: 15px auto;
+      text-align: center;
+      animation: shake 0.9s ease-in-out;
+    }
+
+    h2 {
+      margin-bottom: 5px;
+      font-size: 26px;
+      font-weight: 700;
+      color: #222;
+    }
+    .login-subtitle {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 12px;
+      background-color: #f97316; /* naranja */
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .btn-primary:hover {
+      background-color: #ea580c;
+    }
+    .login-create-account {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #555;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    .login-create-account a {
+      color: #f97316;
+      text-decoration: none;
+      margin-left: 5px;
+    }
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 10px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 15px;
+      background-color: white;
+      transition: background 0.2s ease;
+    }
+    .google-btn:hover {
+      background-color: #f7f7f7;
+    }
+    .google-btn img {
+      height: 20px;
+      margin-right: 10px;
+    }
+
+/* DISENO PARA PAGUINA VERIFY*/
+
+
+
+.verification-container {
+  background-color: #fff;
+  max-width: 400px;
+  height: 350px;
+  margin: 50px auto;
+  padding: 25px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.verification-container h2 {
+  margin-top: 0;
+  font-size: 22px;
+}
+
+.verification-container p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.code-input {
+  width: 100%;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin: 15px 0;
+  box-sizing: border-box;
+}
+
+.code-submit-button {
+  width: 100%;
+  background-color: var(--main-color);
+  color: white;
+  padding: 14px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
+
+.resend-text {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.resend-text a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.resend-text a:hover {
+  text-decoration: underline;
+}
   
 
 @media (max-width: 1119px) {

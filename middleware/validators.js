@@ -16,7 +16,7 @@ export const validate = ((validations) => {
 });
 
 export const loginValidator = [
-    body("email").trim().isEmail().withMessage("Email is required"),
+    body("username").trim().isEmail().withMessage("Email is required"),
     body("password").trim().isLength({ min: 6 }).withMessage("Password should contain at least 6 characters"),
 ];
 
