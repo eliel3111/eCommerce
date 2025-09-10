@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS del header -->
+    <link rel="stylesheet" type="text/css" href="/styles/header.css">
+
+    <link rel="stylesheet" type="text/css" href="/styles/anuncios.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
+
+
+    <title>E-Commerce</title>
+</head>
+<body >
+  <%- include("partials/header.ejs")%>
+<div class="anuncioPage">
+  <div class="sidebar"></div>
+  <div class="main">
+
+    <h1>Crea tu anuncio y vende</h1>
+    <form class="formAnuncio" action="/anuncio/prueba/new" method="post" enctype="multipart/form-data">
+      <!-- Tipo de Anuncio -->
+      <label>Tipo de Anuncio</label>
+      <div class="option-group">
+        <div class="option-btn">Venta</div>
+        <div class="option-btn">Alquiler</div>
+      </div>
+      <!-- Input del Tipo de Anuncio -->
+      <input id="option-btn" type="hidden" name="tipo_inmueble" value="">
+
+      <!-- Título -->
+      <label>Título del Anuncio</label>
+      <input type="text" name="titulo" placeholder="Escribe el título...">
+
+      <!-- Descripción -->
+      <label>Descripción del Anuncio</label>
+      <textarea id="description" name="descripcion" placeholder="Escribe tu descripción..." 
+        oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea>
+      <div>
+        <div></div>
+        <div></div>
+      </div>
+      <!-- Habitaciones -->
+      <label>Número de habitaciones</label>
+      <select id="numero" name="hab" class="select-numero">
+        <option value="">Seleccione</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+
+      <!-- Baños -->
+      <label>Baños</label>
+      <select id="numero" name="banos" class="select-numero">
+        <option value="">Seleccione</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+
+      <!-- Metros Cuadrados -->
+      <label>Metros Cuadrados</label>
+      <input class="metros-input" name="metros_cuadrados" type="number" placeholder="Ej. 120">
+
+      <!-- Parqueos -->
+      <label>Parqueos</label>
+      <select id="numero" name="parqueos" class="select-numero">
+        <option value="">Seleccione</option>
+        <option value="1">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+
+      <!-- Ciudad -->
+      <label>Ciudad</label>
+      <select id="citySelect" name="ciudad">
+        <option value="">-- Selecciona una Ciudad --</option>
+      </select>
+
+      <!-- Sector -->
+      <label>Sector</label>
+      <select id="sectorSelect" name="sector">
+        <option value="">-- Selecciona una Ciudad --</option>
+      </select>
+
+      <!-- Precio -->
+      <label>Precio</label>
+      <input id="precioInput" name="precio" type="text" placeholder="Ej. 2500000">
+
+      <!-- Moneda -->
+      <label>Moneda</label>
+      <div class="option-group">
+        <div class="moneda-btn">$RD</div>
+        <div class="moneda-btn">$US</div>
+      </div>
+      <!-- Input del Tipo de Moneda -->
+      <input id="moneda-btn" type="hidden" name="moneda" value="">
+
+      <!-- Amueblado -->
+      <label>Amueblado</label>
+      <div class="option-group">
+        <div class="amueblado-btn">Amueblado</div>
+        <div class="amueblado-btn">No Amueblado</div>
+      </div>
+      <!-- Input de Amueblado -->
+      <input id="amueblado-btn" type="hidden" name="amueblado" value="">
+
+      <!-- Tipo de Inmueble -->
+      <label>Tipo de Inmueble</label>
+      <select name="inmueble">
+        <option value="">Seleccione</option>
+        <option>Inmuebles</option>
+        <option>Apartamentos</option>
+        <option>Casas</option>
+        <option>Casas Vacacionales y Villas</option>
+        <option>Locales y Oficinas</option>
+        <option>Solares</option>
+        <option>Penthouses</option>
+        <option>Otros</option>
+      </select>
+
+      <div class="contenedor-subida">
+        <div class="icono-subida">☁⬆</div>
+        <div class="texto-subida">Subir imagen</div>
+        <label for="archivo" class="boton-subir">Subir</label>
+        <input type="file" id="archivo" name="imagenes" accept="image/*" multiple>
+      </div>
+      <div class="vista-previa" id="vista-previa"></div>
+      <div class="mensaje-error" id="mensaje-error"></div>
+
+      <button type="submit" class="submit-btn">Publicar Anuncio</button>
+    </form>
+
+
+
+
+
+
+
+
+
+
+  </div>
+  <div class="sidebar"></div>
+</div>
+
+<!-- Primero la librería externa -->
+<script src="https://unpkg.com/browser-image-compression@latest/dist/browser-image-compression.js"></script>
+
+<!-- Después tu script que la usa -->
+<script src="/anuncioJava.js" type="text/javascript"></script>
+
+</body>
+</html>

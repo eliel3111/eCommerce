@@ -5,7 +5,6 @@ import db from '../db.js';
 export const getHome = async (req, res) => {
   try {
     const { rows } = await db.query('SELECT tipo_inmueble, titulo, hab, banos, metros_cuadrados, ciudad, sector, precio, moneda, imagen FROM inmuebles WHERE destacado = true');
-    console.log(rows);
     res.render("home.ejs", { content: rows});
   } catch (error) {
     console.error(error);
@@ -60,12 +59,10 @@ export const homeSearch = async (req, res) => {
         valuesArray.push(ubicacion[1]);
         query += `AND sector = $${index++} `;
     }
-    console.log(valuesArray);
-    console.log(query);
+
 
     try {
         const { rows } = await db.query(query, valuesArray);
-        console.log(rows);
     } catch (error) {
         console.error(error);
     }

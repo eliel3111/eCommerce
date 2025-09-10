@@ -16,8 +16,27 @@
 
               <!--Area del logo arriba izquierda-->
               <div class="user-bar-area">
-                <a class="iniciar-sesion"><div>Iniciar sesion</div></a>
-                <a class="nav-yellow-botton"><div class="yellow-botton">+ Publicar</div></a>
+                 <% console.log(user);%>
+                <% if (user) { %>
+                  <div class="iniciar-sesion">Bienvenido <%= user.nombre %></div>
+                <% } else { %>
+                  <a href="/user/login" class="iniciar-sesion">
+                    <div>Iniciar sesión</div>
+                  </a>
+                <% } %>
+                <a class="nav-yellow-botton" href="anuncio/new" ><div class="yellow-botton">+ Publicar</div></a>
+                  <!--Icono cuando inicie session.-->
+                <% if (user) { %>
+                  <div class="nav-icon-container" >
+                    <div class="nav-icon-tooltip">
+                      Aquí tu información o menú de usuario
+                    </div>
+                    <!-- Icono SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="user-nav-icon">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                  </div>
+                <% } %>
               </div>  
 
               <div id="movil-menu-button" class="icono-web-nav">
@@ -27,15 +46,19 @@
                 d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
               </div>
+
+
+              <!--sidePanel-->
               <div id="sidePanel" class="hidden">
+
                 <% if (3 < 2) { %>
                   <div class="movil-nav-box a">
                     <img src="https://randomuser.me/api/portraits/men/75.jpg" class="foto-usuario">
-                    <div class="nombre-usuario">Eliel Rodriguez</div>
+                    <div class="nombre-usuario">Ashley Rodriguez</div>
                   </div>
                 <% } %>
 
-              <% if (1 < 2) { %>
+                <% if (1 < 2) { %>
                 <div class="movil-nav-box">
                   <div class="movil-nav-icon-container" >
                     <!-- Icono SVG -->
@@ -43,12 +66,17 @@
                       <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                     </svg>
                   </div>
-                  <div class="movil-nav-option-text">Iniciar Sesión</div>
-                </div>
-              <% } %>  
+
+                  <% if (user) { %>
+                  <div class="movil-nav-option-text">Bienvenido <%= user.nombre %></div>
+                    <% } else { %>
+                    <a href="/user/login"><div class="movil-nav-option-text">Iniciar Sesión</div></a>
+                    <% } %>
+                  </div>
+                  <% } %>  
               
-              <% if (1 < 2) { %>
-                <div class="movil-nav-box">
+                <% if (1 < 2) { %>
+                <a class="movil-nav-box" href="/anuncio/new">
                   <div class="movil-nav-icon-container" >
                     <!-- Icono SVG -->
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="movil-nav-icon">
@@ -56,9 +84,9 @@
                     </svg>
 
                   </div>
-                  <div class="movil-nav-option-text">Publicar</div>
-                </div>
-              <% } %>
+                  <div class="movil-nav-option-text">Publicar x</div>
+                </a>
+                 <% } %>
               </div>
             </div>
             

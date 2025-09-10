@@ -49,7 +49,7 @@ let selectedType = "Todos";
         document.getElementById('type-search').setAttribute("value", selectedType.toLowerCase());
         const typeSearch = document.getElementById('type-search');
       };
-      console.log("El usuario quiere buscar una propiedad tipo: " + selectedType);
+
     });
 });
 
@@ -69,7 +69,6 @@ let selectedType = "Todos";
 
   closeToolPrice.addEventListener("click", (event) => {
     setTimeout(() => {
-      console.log("Trying to close price tooltip");
     tooltipPrice.style.display = 'none';
     openToolPrice = false;
     }, 300)
@@ -150,7 +149,6 @@ let selectedType = "Todos";
     // Event listener para cerrar el modal
     closeModalBtn.addEventListener('click', () => {
       modalOverlay.style.display = 'none'; // Ocultar el modal
-      console.log("Modal Boton Cerrar");
       //Para que aparezca el container de los sectores
       closingInputCiudad();
       closingInputSector();
@@ -160,7 +158,6 @@ let selectedType = "Todos";
     modalOverlay.addEventListener('click', (e) => {
       if (e.target === modalOverlay) {
         modalOverlay.style.display = 'none';
-        console.log("Click Afuera del Modal");
         //Para que aparezca el container de los sectores
         closingInputCiudad();
         closingInputSector();
@@ -366,7 +363,6 @@ let selectedType = "Todos";
 
       //Codigo para cerrar modal
       modalOverlay.style.display = 'none'; // Ocultar el modal
-      console.log("Modal Boton Cerrar");
       //Para que aparezca el container de los sectores
       closingInputCiudad();
       closingInputSector();
@@ -483,7 +479,6 @@ tooltip.addEventListener('click', () => {
     if (entered === true) {
       setInside(false);
       entered = false;
-      console.log(btn.id);
     }
   }, 10);
   } else {
@@ -492,6 +487,33 @@ tooltip.addEventListener('click', () => {
 });
 
 };
+
+// EVENT Tool Tip User icon
+document.addEventListener("DOMContentLoaded", () => {
+const navIcon = document.querySelector(".nav-icon-container");
+if (!navIcon) {
+    return;
+  }
+  const tooltip = navIcon.querySelector(".nav-icon-tooltip");
+  // Aquí sigue tu código usando tooltip
+
+ // Evento: mostrar tooltip al hacer click
+  navIcon.addEventListener("click", (e) => {
+    e.stopPropagation(); // Evita que el click cierre el tooltip inmediatamente
+    if (tooltip.classList.contains("visible")) {
+    tooltip.classList.remove("visible"); // oculta el tooltip
+  } else {
+    tooltip.classList.add("visible"); // muestra el tooltip
+  }
+  });
+
+  // Evento: cerrar tooltip si se hace click afuera
+  document.addEventListener("click", () => {
+    tooltip.classList.remove("visible"); // oculta el tooltip
+  });
+  
+});
+
 
 
 // FUNCTION: Updates the hidden input and display label based on the selected property type, truncating text if too long.
@@ -519,7 +541,6 @@ function handleTypeTool(id) {
 function handleLocationSelected(id) {
   // Get the selected text from the clicked element
   let selected = document.getElementById(id).innerText;
-  console.log(selected);
 
   if (selected === "Seleccionar") {
     return;
@@ -572,7 +593,6 @@ function formatearInput(input, setValor) {
         valueMax = numero;
       };
 
-      console.log("Precio minimo: " + valueMin + " Precio Maximo: " + valueMax);
       // Mostrar con comas
       input.value = numero.toLocaleString('en-US');
       
@@ -639,7 +659,6 @@ function formatearInput(input, setValor) {
     cities = Object.keys(data);
     allLocation = data;
 
-    console.log("Todo cargado:", allLocation);
   } catch (error) {
     console.error("Error al obtener ciudades:", error);
   }

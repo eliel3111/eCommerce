@@ -11,6 +11,10 @@ import morgan from "morgan";
 import session from 'express-session';
 import passport from 'passport';
 import flash from "connect-flash";
+import dotenv from "dotenv";
+
+dotenv.config(); 
+
 // =======================
 // 🚀 Server Configuration
 // =======================
@@ -21,15 +25,28 @@ app.use(express.json()); // Parses incoming JSON
 
 app.use(
     session({
-        secret: "TOPSECRETWORD",
+        secret: process.env.SESSION_SECRET,
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
     })
 ); 
 
+app.use(flash());
+
+
+
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+
+
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  res.locals.messages = req.flash();
+  next();
+});
+
+
+
 
 
 // ==================================================================
@@ -81,7 +98,6 @@ app.get("/api/cities",async (req, res) => {
   // POST Search
 app.post("/search", async (req, res) => {
   //Chequiar si el input search esta vacio
-  console.log(typeof(req.body.search));
     if (req.body.search === "") {
       res.redirect("/");
     } else {
@@ -104,7 +120,6 @@ app.post("/search", async (req, res) => {
   });
 
   app.post("/anuncio", async (req, res) => {
-    console.log(req.body.id);
     try {
       const response = await axios.post(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${req.body.id}`, config);
       const result = response.data;

@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+import * as myIndex from '../index.js';
+import * as myUserRoutes from '../routes/userRoutes.js'
 const saltRounds = 10;
 dotenv.config();
 
@@ -20,6 +22,8 @@ export function getAllUsers(req, res, next) {
   next();
 }  
 
+
+//SIGN UP CONTROL
 export async function signupControl(req, res, next) {
     console.log("El usuario esta tratando de registrarse");
     const name = req.body.name;
@@ -32,9 +36,9 @@ export async function signupControl(req, res, next) {
     console.log(checkResult.rows);
 
     if (checkResult.rows.length > 0) {
-        return res.status(400).render('verify.ejs', {
+        return res.status(400).render('login.ejs', {
           error: true,
-          mensaje: "El correo ya existe, intenta iniciar sesión.",
+          mensaje: "El correo ya existe. Inicie sesión.",
           usuario: email
         });
 
@@ -71,8 +75,40 @@ export async function signupControl(req, res, next) {
     next();
 };
 
+//CONTROL PARA CUANDO SE BORRA LA CONTRASENA FORGOT-PASSWORD
+export async function forgotPassControl(req, res) {
+  const { username } = req.body; // asumimos que el input se llama "username"
+
+  try {
+    const result = await db.query(
+      "SELECT * FROM usuarios WHERE email = $1",
+      [username]
+    );
+
+    if (result.rows.length === 0) {
+      // Email no existe, mensaje genérico
+      return res.render("forgot-password", {
+        message: "Si tu email está registrado, recibirás instrucciones"
+      });
+    }
+
+    // Email existe, aquí continuarías con enviar correo
+    // Por ejemplo: generar token, guardarlo en DB y enviar link al usuario
+    // ...
+    
+    return res.render("forgot-password", {
+      message: "Si tu email está registrado, recibirás instrucciones"
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Error del servidor");
+  }
+};
 
 
+
+//CONTROL PARA VERIFICAR CODIGO
 export async function verifyCodeControl(req, res) {
   const { email, codigo } = req.body;
   console.log(email);
@@ -151,6 +187,8 @@ export async function verifyCodeControl(req, res) {
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 };
+
+
 
 
 

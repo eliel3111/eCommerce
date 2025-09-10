@@ -7,6 +7,10 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
 /*pARA ELIMINAR EL SELECCION TOUCH AZUL*/
 a, button, div {
     -webkit-tap-highlight-color: transparent;
@@ -19,8 +23,13 @@ body {
 }
 
 :root {
+  --fuente-principal: 'Roboto', sans-serif;
   --main-color: #b71c1c;
   --secondary-color: #b99a32;
+  --yellow-logo: #FED700;
+  --blanco-logo: #F5F5F4;
+  --darkgrey-color: #2B2A27;
+  --color-fondo: #f6f6f6;
 }
 
 
@@ -161,6 +170,50 @@ svg{font-weight:bold;max-width:600px;height:100%;}
 .movil-nav-box {
   display: none;
 }
+
+.nav-icon-container {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  color: inherit;
+  position: relative;
+  cursor: pointer;
+}
+.user-nav-icon {
+  width: 40px;
+  height: 40px;
+  color: inherit;
+  stroke: #F3F4F6;
+}
+
+.nav-icon-tooltip {
+  position: absolute;
+  top: 150%;          /* justo debajo del ícono */
+  right: 0px;          /* a la mitad horizontal del contenedor */
+  transform: translateY(-10px); /* centrado y un poco arriba para animación */
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;  /* evita que se pueda clickar cuando está oculto */
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.375);
+  background-color: #212121;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-family: var(--fuente-principal);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: nowrap;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.nav-icon-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;  /* permite interacciones cuando está visible */
+}
+
 
 /*DISENO DE HOME EJS*/
 

@@ -1,6 +1,7 @@
 import express from 'express';
 import * as userSearch from '../controllers/userSearch.js';
 import userRoutes from '../routes/userRoutes.js'
+import anuncioRoutes from '../routes/AnuncioRouter.js';
 import authMiddleware from '../middleware/auth.js';
 import db from '../db.js';
 
@@ -20,5 +21,8 @@ router.get('/buscar-inmuebles', userSearch.homeSearch);
 
 // Grupo de routes para users
 router.use("/user", userRoutes);
+
+// Grupo de routes para los anuncios
+router.use("/anuncio", anuncioRoutes);
 
 export default router;
