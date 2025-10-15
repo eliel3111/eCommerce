@@ -127,9 +127,9 @@ passport.use(new GoogleStrategy({
                 return cb(null, result.rows[0]);
                 
             } else {
-                const query = `
-                    INSERT INTO users (email, provider, profile_id, nombre, verificado, fecha_creacion)
-                    VALUES ($1, $2, $3, $4, $5, $6)
+                const insertQuery = `
+                    INSERT INTO usuarios (email, provider, profile_id, nombre, verificado, fecha_creacion, contrasena)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7)
                     RETURNING *;
                 `;
 
@@ -139,7 +139,8 @@ passport.use(new GoogleStrategy({
                     profile.id,                // profile_id
                     profile.displayName,       // nombre
                     true,                      // verificado
-                    new Date()                 // fecha_creacion
+                    new Date(),                // fecha_creacion 
+                    "google-auth"                 
                 ];
                 const insertResult = await db.query(insertQuery, values);
                 return cb(null, insertResult.rows[0]);

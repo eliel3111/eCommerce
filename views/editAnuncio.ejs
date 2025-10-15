@@ -28,11 +28,14 @@
       <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
       <path d="M15 18L9 12L15 6" stroke="#b71c1c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <div class="back-text">Volver al inicio</div>
+      <div class="back-text">Volver a mis Anuncios</div>
     </a>
     </div>
-    <h1>Crea tu anuncio y vende</h1>
-    <form class="formAnuncio" action="/anuncio/upload-images" method="post" enctype="multipart/form-data">
+    <h1>Edita tu anuncio:</h1>
+    <form class="formAnuncio" action="/anuncio/save-changes" method="post">
+
+      <input type="hidden" name="anuncioId" value="<%= anuncio.id %>">
+
       <!-- Tipo de Anuncio -->
       <label id="tipo_inmueble" >Tipo de Anuncio</label>
       <div class="option-group">
@@ -154,17 +157,9 @@
         <option>Penthouses</option>
         <option>Otros</option>
       </select>
-      <label id="imagenes">Subir Imagenes</label>
-      <div class="contenedor-subida">
-        <div class="icono-subida">☁⬆</div>
-        <div class="texto-subida">Subir imagen</div>
-        <label for="archivo" class="boton-subir">Subir</label>
-        <input type="file" id="archivo" name="imagenes" accept="image/*" multiple>
-      </div>
-      <div class="vista-previa" id="vista-previa"></div>
       <div class="mensaje-error" id="mensaje-error"></div>
 
-      <button type="submit" class="submit-btn">Publicar Anuncio</button>
+      <button type="submit" class="submit-btn">Guardar Cambios</button>
     </form>
 
 
@@ -181,10 +176,15 @@
 </div>
 
 <!-- Primero la librería externa -->
+<script>
+  const anuncio = <%- JSON.stringify(anuncio || {}) %>; // fallback a objeto vacío
+
+</script>
+
 <script src="https://unpkg.com/browser-image-compression@latest/dist/browser-image-compression.js"></script>
 
 <!-- Después tu script que la usa el-->
-<script src="/anuncioJava.js" type="text/javascript"></script>
+<script src="/editAnuncio.js" type="text/javascript"></script>
 
 </body>
 </html>

@@ -25,4 +25,7 @@ router.use("/user", userRoutes);
 // Grupo de routes para los anuncios
 router.use("/anuncio", anuncioRoutes);
 
+
+
+
 export default router;

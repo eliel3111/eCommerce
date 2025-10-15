@@ -156,7 +156,9 @@ function twoButton(className) {
         // Asignar el valor de la variable al input
         input.value = btn.innerHTML;
 
-        console.log(input.value); // Para verificar que se asignó correctamente
+        console.log(input.name); // Para verificar que se asignó correctamente
+        const label = document.getElementById(`${input.name}`);
+        if (label) label.classList.remove("label-error");
 
     });
   });
@@ -196,48 +198,75 @@ twoButton("amueblado-btn");
   //SUBIR IMAGENES Y PROYECTARLAS
 
   const inputArchivo = document.getElementById('archivo');
-  const inputImagenes = document.getElementById('imagenes');
-    const vistaPrevia = document.getElementById('vista-previa');
-    const mensajeError = document.getElementById('mensaje-error');
-    let totalImagenes = 0;
-    const LIMITE_IMAGENES = 10;
-    let filesArray = [];
+const inputImagenes = document.getElementById('imagenes');
+const vistaPrevia = document.getElementById('vista-previa');
+const mensajeError = document.getElementById('mensaje-error');
 
-    inputArchivo.addEventListener('change', () => {
+let totalImagenes = 0;
+const LIMITE_IMAGENES = 10;
+let filesArray = [];
 
-      const archivos = Array.from(inputArchivo.files);
-    
-      
-      if (totalImagenes + archivos.length > LIMITE_IMAGENES) {
-        const disponibles = LIMITE_IMAGENES - totalImagenes;
-        if (disponibles <= 0) {
-          mensajeError.textContent = `Solo puedes subir un máximo de ${LIMITE_IMAGENES} imágenes.`;
-          inputArchivo.value = "";
-          return;
-        } else {
-          mensajeError.textContent = `Solo puedes subir un máximo de ${LIMITE_IMAGENES} imágenes.`;
-          archivos.splice(disponibles); // cortar las extras
-        }
-      } else {
-        mensajeError.textContent = "";
-      }
+// Renderizar todas las imágenes en vista previa
+function mostrarPreview() {
+  vistaPrevia.innerHTML = ""; // limpiar antes de volver a pintar
 
-      filesArray = filesArray.concat(archivos); 
-      console.log(filesArray);
+  filesArray.forEach((archivo, index) => {
+    const url = URL.createObjectURL(archivo);
 
-      archivos.forEach(archivo => {
-        const url = URL.createObjectURL(archivo);
-        const img = document.createElement("img");
-        img.src = url;
-        img.alt = "Vista previa";
-        vistaPrevia.appendChild(img);
-        totalImagenes++;
-
-      });
+    // contenedor
+    const div = document.createElement("div");
+    div.classList.add("item-imagen");
+    // imagen
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = "Vista previa";
 
 
-      inputArchivo.value = ""; // limpiar para permitir volver a elegir las mismas
+    // botón eliminar
+    const btn = document.createElement("button");
+    btn.innerText = "X";
+    btn.classList.add("btn-eliminar");
+
+
+    btn.addEventListener("click", () => {
+      filesArray.splice(index, 1); // eliminar del array
+      totalImagenes--;             // restar del contador
+      mostrarPreview();            // volver a renderizar
     });
+
+    div.appendChild(img);
+    div.appendChild(btn);
+    vistaPrevia.appendChild(div);
+  });
+}
+
+inputArchivo.addEventListener('change', () => {
+  const label = document.getElementById("imagenes");
+  if (label) label.classList.remove("label-error");
+
+  const archivos = Array.from(inputArchivo.files);
+
+  if (totalImagenes + archivos.length > LIMITE_IMAGENES) {
+    const disponibles = LIMITE_IMAGENES - totalImagenes;
+    if (disponibles <= 0) {
+      mensajeError.textContent = `Solo puedes subir un máximo de ${LIMITE_IMAGENES} imágenes.`;
+      inputArchivo.value = "";
+      return;
+    } else {
+      mensajeError.textContent = `Solo puedes subir un máximo de ${LIMITE_IMAGENES} imágenes.`;
+      archivos.splice(disponibles); // cortar extras
+    }
+  } else {
+    mensajeError.textContent = "";
+  }
+
+  filesArray = filesArray.concat(archivos);
+  totalImagenes = filesArray.length;
+
+  mostrarPreview();
+  inputArchivo.value = ""; // reset para volver a elegir las mismas
+});
+
 
 // Interceptar el submit del formulario
 const form = document.querySelector(".formAnuncio");
@@ -250,7 +279,12 @@ form.addEventListener("submit", (e) => {
   filesArray.forEach(file => {
     formData.append("imagenes", file);
   });
-  console.time("⏱️ fetch"); // inicia el cronómetro
+
+
+  const resultado = validarFormulario();
+  console.log(resultado);
+  if (resultado === true) {
+      console.time("⏱️ fetch"); // inicia el cronómetro
   // Enviar con fetch
   fetch(form.action, {
     method: "POST",
@@ -263,4 +297,77 @@ form.addEventListener("submit", (e) => {
 
   })
   .catch(err => console.error("❌ Error al enviar:", err));
+} else {
+  return;
+}
 });
+
+//EVENT: Cuando se use el ultimo input del formulario
+// se activara la funcion validar formulario
+
+
+
+
+//EVENT: Cada vez que un in
+const campos = document.querySelectorAll("input[name], select[name], textarea[name]");
+
+campos.forEach(campo => {
+  // Para inputs y textareas, usa "input", para selects "change"
+  const evento = (campo.tagName === "SELECT") ? "change" : "input";
+
+  campo.addEventListener(evento, () => {
+    console.log("evento global");
+    validarFormulario();
+  });
+});
+
+
+
+
+
+//FUNCION: Para chequiar si todos los inputs del formulario
+// tienen valor.
+function validarFormulario() {
+  // Seleccionamos todos los inputs, selects y textareas con atributo name
+  const campos = document.querySelectorAll("input[name], select[name], textarea[name]");
+
+  let valido = true;
+  let mensajesError = [];
+
+  campos.forEach(campo => {
+    if (campo.type === "file") {
+      // Validar archivo (mínimo 1)
+      const label = document.getElementById(`${campo.name}`);
+
+      if (filesArray.length === 0) {
+        valido = false;
+        mensajesError.push(`Debes seleccionar al menos un archivo en "${campo.name}".`);
+      if (label) label.classList.add("label-error");
+      } else {
+      // restaurar color normal
+        if (label) label.classList.remove("label-error");
+      }
+    } else {
+      // Para todos los demás (incluidos hidden)
+
+      //Si Campo esta vacio poner label rojo
+        const label = document.getElementById(`${campo.name}`);
+
+      if (!campo.value.trim()) {
+        valido = false;
+        mensajesError.push(`El campo "${campo.name}" es obligatorio.`);
+        // marcar el label en rojo
+        if (label) label.classList.add("label-error");
+      } else {
+      // restaurar color normal
+        if (label) label.classList.remove("label-error");
+      }
+    }
+  });
+
+  /*if (!valido) {
+    alert(mensajesError.join("\n")); // Aquí se listan los errores
+  }*/
+
+  return valido; // true = envía formulario, false = lo detiene
+}

@@ -3,6 +3,7 @@
 // =======================
 import express from "express";
 import ejs from "ejs"
+import path from "path";
 import axios from "axios";
 import bodyParser from "body-parser";
 import { log } from "async";
@@ -21,6 +22,15 @@ dotenv.config();
 const app = express();
 const port = 3000;
 app.use(express.json()); // Parses incoming JSON
+
+// Si usas ES Modules, para obtener __dirname:
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Carpeta de vistas
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 
 app.use(
@@ -86,6 +96,7 @@ app.use(morgan("dev"));
 // ==================================================================
 // 🌐 Routes
 // ==================================================================
+
 
 app.use('/', appRouter);
 

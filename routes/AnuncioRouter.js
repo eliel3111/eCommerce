@@ -6,6 +6,7 @@ import fs from "fs";
 import upload from "../middleware/upload.js";
 import ensureAuthenticated from "../middleware/auth.js";
 import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
+import { getAnuncioById } from '../controllers/anuncios-control.js'
 import dotenv from 'dotenv';
 import db from '../db.js';
 import { type } from 'os';
@@ -22,8 +23,213 @@ const s3 = new S3Client({
   }
 });
 
+anuncioRoutes.get("/usuario-info", (req, res) => {
+  res.json({ usuario: req.user || null });
+});
+
+//Ruta para obtener la informacion de un id y editarlo.
+// 🟩 GET /anuncios/editar/:id
+anuncioRoutes.get("/editar/:id", ensureAuthenticated, async (req, res) => {
+  const anuncioId = req.params.id;
+  const usuarioId = req.user?.id; // el ID del usuario autenticado
+console.log(usuarioId)
+  // 🧩 1️⃣ Validar que el ID del anuncio sea un número válido
+  if (!/^\d+$/.test(anuncioId)) {
+    return res.status(400).json({
+      success: false,
+      message: "El ID del anuncio no es válido. Debe ser un número.",
+    });
+  }
+
+  try {
+    // 🧩 2️⃣ Buscar el anuncio en la tabla "inmuebles"
+    const result = await db.query("SELECT * FROM inmuebles WHERE id = $1", [anuncioId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "El anuncio no existe o fue eliminado.",
+      });
+    }
+
+    const anuncio = result.rows[0];
+    console.log(anuncio);
+    // 🧩 3️⃣ Verificar si el usuario tiene permiso (si es el creador)
+    if (anuncio.usuario_id !== usuarioId) {
+      return res.status(403).json({
+        success: false,
+        message: "No tienes permiso para editar este anuncio.",
+      });
+    }
+
+    /// 4️⃣ Renderizar vista EJS con los datos
+    res.render("editAnuncio", {
+      success: true,
+      message: "Anuncio obtenido correctamente.",
+      anuncio, // <--- aquí pasas los datos del anuncio
+      usuario: req.user, // opcional: info del usuario logeado
+    });
+
+  } catch (error) {
+    console.error("Error al obtener anuncio para edición:", error);
+    res.status(500).render("error", {
+      message: "Error interno del servidor.",
+    });
+  }
+});
+
+anuncioRoutes.post("/save-changes", (req, res) => {
+  // req.body contiene todos los campos enviados desde el formulario
+  const body = req.body;
+
+  // Convertimos campos específicos
+  const anuncio = {
+    ...body,
+    anuncioId: Number(body.anuncioId),
+    hab: Number(body.hab),
+    banos: Number(body.banos),
+    metros_cuadrados: Number(body.metros_cuadrados),
+    parqueos: Number(body.parqueos),
+    precio: Number(body.precio),
+    amueblado: body.amueblado === "true",
+    moneda: req.body.moneda?.toUpperCase()
+  };
+
+  console.log(anuncio);
+
+  // Respuesta al cliente
+  res.send("Datos recibidos correctamente");
+});
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Ruta protegida
+anuncioRoutes.post("/guardar-favorito/:id", ensureAuthenticated, async (req, res) => {
+  const anuncioId = req.params.id;
+  const usuarioId = req.user.id; // el usuario autenticado
+
+console.log("guardar")
+  try {
+    console.log("🟢 Usuario autenticado");
+    console.log("➡️ Anuncio ID:", anuncioId);
+    console.log("➡️ Usuario ID:", usuarioId);
+    
+    //Guarar l anunio favorito
+        try {
+          const result = await db.query('SELECT id FROM inmuebles WHERE id = $1', [anuncioId]);
+          
+          if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'El inmueble no existe.' });
+          }
+
+          // Verificar si ya existe el favorito
+  const existe = await db.query(
+    'SELECT 1 FROM favoritos WHERE user_id = $1 AND producto_id = $2',
+    [usuarioId, anuncioId]
+  );
+
+  if (existe.rows.length > 0) {
+    // Ya existe la relación
+    return res.status(400).json({ message: 'El anuncio ya está en favoritos.' });
+  }
+
+  // Si no existe, insertar
+  await db.query(
+    'INSERT INTO favoritos (user_id, producto_id) VALUES ($1, $2)',
+    [usuarioId, anuncioId]
+  );
+
+  console.log('Anuncio agregado a favoritos correctamente.');
+
+          console.log({ message: 'Anuncio agregado a favoritos correctamente.' });
+
+        } catch (error) {
+          console.error('Error al agregar favorito:', error);
+          res.status(500).json({ message: 'Error al agregar favorito.' });
+        }
+
+
+    res.json({
+      message: "El anuncio fue guardado correctamente.",
+      anuncioId,
+      usuarioId
+    });
+  } catch (err) {
+    console.error("Error al guardar contacto:", err);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+
+anuncioRoutes.post("/eliminar-favorito/:id", ensureAuthenticated, async (req, res) => {
+
+  const anuncioId = req.params.id;
+  const usuarioId = req.user.id; // el usuario autenticado
+
+    try {
+    console.log("🟢 Usuario autenticado");
+    console.log("➡️ Anuncio ID:", anuncioId);
+    console.log("➡️ Usuario ID:", usuarioId);
+    
+    //Guarar l anunio favorito
+        try {
+
+          // Verificar si ya existe el favorito
+          const existe = await db.query(
+            'SELECT 1 FROM favoritos WHERE user_id = $1 AND producto_id = $2',
+            [usuarioId, anuncioId]
+          );
+
+          if (existe.rows.length = 0) {
+            // Ya existe la relación
+            return res.status(400).json({ message: 'El anuncio NO está en favoritos.' });
+          }
+
+          // Si esta diferente, insertar
+          await db.query(
+            'DELETE FROM favoritos WHERE user_id = $1 AND producto_id = $2',
+            [usuarioId, anuncioId]
+          );
+
+          console.log('Anuncio eliminado de favoritos.');
+          
+
+        } catch (error) {
+          console.error('Error al agregar favorito:', error);
+          res.status(500).json({ message: 'Error al agregar favorito.' });
+        }
+
+
+        return res.status(200).json({
+            message: 'Anuncio eliminado de favoritos.',
+            favorito: false, // 👈 útil para el frontend
+            anuncioId,
+            usuarioId 
+        });
+  } catch (err) {
+    console.error("Error al guardar contacto:", err);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+
+});
+
+/*
 anuncioRoutes.get("/", ensureAuthenticated, (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -58,9 +264,9 @@ anuncioRoutes.get("/", ensureAuthenticated, (req, res) => {
 </body>
 </html>
   `);
-});
+});*/
 
-anuncioRoutes.get("/new", (req, res) => {
+anuncioRoutes.get("/new", ensureAuthenticated, (req, res) => {
     /*console.log("📥 Query Params:", req.query);      // Si vienen parámetros en la URL
     console.log("📥 Body:", req.body);              // Si viene info en el body (aunque GET casi no lo usa)
     console.log("📥 Params:", req.params);          // Si defines algo como /new/:id
@@ -68,6 +274,10 @@ anuncioRoutes.get("/new", (req, res) => {
 
     res.render("newAnuncio.ejs");
 });
+
+// Endpoint GET /ANUNCIOS/:ID (Ruta no especifica)
+anuncioRoutes.get("/:id", getAnuncioById);
+
 
 // Endpoint para procesar el formulario
 
@@ -91,6 +301,8 @@ console.timeEnd("multer save");
       amueblado,
       inmueble
     } = req.body;
+
+    
 
     // Archivos subidos
     const archivos = req.files;
@@ -226,6 +438,8 @@ async function guardarImagenes(ad_id, urls) {
     }
   }
 }
+
+
 
 
 

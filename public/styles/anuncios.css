@@ -12,28 +12,37 @@
 * {
     font-family: var(--fuente-principal);
 }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/** {
+  outline: 1px solid red !important;
+}*/
 
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;      /* asegura que usen toda la pantalla */
-  overflow-x: hidden; /* evita scroll lateral (ese suele crear espacio blanco) */
+  margin-bottom: 0;
 }
 
 .anuncioPage {
   margin: 0;
-  min-height: 100vh; /* en lugar de height: 100% */
+  min-height: 100%; /* en lugar de height: 100% */
   display: flex;
+  /*background-color: red;*/
 }
 
     .sidebar {
-      flex: 1; /* Ocupan espacio pero no son principales */
-      background: var(--color-fondo);
+      flex: 2; /* Ocupan espacio pero no son principales */
+      background: #ffffff;
     }
 
     .main {
       flex: 8; /* Contenedor principal (más grande) */
-      background: var(--color-fondo);
+      background: #E5E5E5;
       justify-content: center;
       align-items: center;
       font-size: 15px;
@@ -52,6 +61,21 @@ html, body {
       padding: 30px;
     }
 
+    .go-back-div {
+      display: flex;
+    }
+
+    .login-back {
+      display: flex;
+      align-items: center;
+    }
+
+    .back-text {
+      font-weight: bold;
+      color: var();
+      font-family: var(--fuente-principal);
+    }
+
     h1 {
       text-align: center;
       color: #212121; /* Azul Microsoft */
@@ -65,6 +89,12 @@ html, body {
       font-weight: 600;
       margin: 15px 0 6px;
       color: #333;
+    }
+
+    .label-error {
+      color: #d93025;         /* Rojo de error */
+      font-weight: bold;      /* Negrita para resaltar */
+      font-size: 14px;        /* Un poco más pequeño que el texto normal */
     }
 
     input, select, textarea, button {
@@ -167,7 +197,7 @@ html, body {
       background-color: #f9e6e6; /* fondo claro */
       padding: 15px;
       border-radius: 10px;
-      margin-top: 30px;
+      margin-top: 5px;
       text-align: center;
       font-family: var(--fuente-principal);
       justify-content: center;
@@ -211,30 +241,830 @@ html, body {
     }
 
     .vista-previa {
-      background-color: var(--color-fondo); /* gris */
-      border-radius: 8px;
-      padding: 10px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-      gap: 10px;
-      max-height: 200px;
-      overflow-y: auto;
-    }
+  background-color: var(--color-fondo, #f5f5f7); /* gris suave como macOS */
+  border-radius: 12px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 10px;
+  max-height: 240px;
+  /*overflow-y: auto;*/
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
 
-    .vista-previa img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 5px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-    }
+/* Contenedor de cada imagen */
+.item-imagen {
+  position: relative;
+  display: inline-block;
+  border-radius: 12px;
+  width: 80px;
+  height: 100px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+
+/* Imagen */
+.item-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 59, 48, 0.9); /* rojo iOS */
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+  text-align: center;
+}
+
+.btn-eliminar:hover {
+  background: rgba(255, 59, 48, 1);
+  transform: scale(1.1);
+}
+
 
      .mensaje-error {
       color: #e63946;
       font-size: 14px;
       margin-top: 10px;
     }
+
+/*PAGUINA DEL ANUNCIO TERINADO, RENDER ANUNCIO*/
+
+    .mainAnuncio {
+      flex: 13; /* Contenedor principal (más grande) */
+      background: #ffffff;
+      justify-content: center;
+      align-items: center;
+      font-size: 15px;
+      font-family: Arial, sans-serif;
+      width: 600px;
+      height: 100%;
+    }
+
+    .boxAnuncio {
+      flex: 1;                 /* 👈 cada div ocupa el mismo ancho disponible */
+    }
+
+    /*CONTENEDOR A Titulo y Boton Guardar*/
+    .tituloContenedor {
+      display: flex;
+      align-items: stretch;  /* 👈 fuerza que ambos divs tengan la misma altura */
+      width: 100%;
+    }
+
+    /*tituloAnuncio CONTENEDOR*/
+    .tituloAnuncio {
+      flex: 1;   
+      padding: 10px;
+    }
+    /*Boton de Guardar CONTENEDOR*/
+    .guardarAnuncio-container {
+      width: 100px;     
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    .guardar-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-family: Helvetica, Arial, sans-serif;
+      padding: 7px;
+      border-radius: 10px;
+    }
+
+    /* Efecto hover */
+.guardar-btn:hover {
+  background-color: var(--color-fondo);
+}
+
+
+        .icono {
+      width: 24px;
+      height: 24px;
+    }
+
+    .texto {
+      font-size: 16px;
+      color: #333;
+      font-weight: 500;
+    }
+
+
+
+    .titulo-anuncio-text {
+          display: flex;
+          font-size: 25px;
+          font-family: 'Inter', Helvetica, Arial, sans-serif;
+          font-weight: 700;
+        }
+    .icono-atras-movil {
+          display: none;
+        }
+
+/*SECCION DE LAS IMAGENES*/
+
+  .imagenes-contenedor {
+    position: relative;
+  }      
+
+  .carousel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 170px);
+    overflow: hidden;
+    gap: 10px;
+    padding: 10px;
+    scrollbar-width: none; /* esconder scrollbar en Firefox */
+  }
+  .carousel::-webkit-scrollbar { display: none; } /* esconder en Chrome */
+
+.slide {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ccc;
+  height: 100%;
+  object-fit: cover;
+}
+.slide img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: filter 0.3s ease, transform 0.3s ease;
+  cursor: pointer; /* cambia el cursor al pasar el mouse */
+}
+
+.slide img:hover {
+  filter: brightness(0.85); /* oscurece ligeramente la imagen */
+  transform: scale(1.01);   /* opcional: leve zoom para efecto moderno */
+}
+
+.grande {
+  grid-column: span 2;
+    grid-row: span 2;
+    object-fit: cover;
+}
+
+.segunda {
+  grid-column: span 2;
+  object-fit: cover;
+}
+
+.enorme {
+  grid-column: span 4;
+    grid-row: span 2;
+    object-fit: cover;
+}
+
+/* botones */
+.prev-img-button, .next-img-button {
+  position: absolute;
+  top:50%;             /* centrado vertical */
   
+  transform: translateY(-50%); /* ajuste fino */
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.8); /* fondo blanco semitransparente */
+  border: none;
+  border-radius: 50%;   /* círculo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6); /* sombra sutil */
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.prev-img-button {
+  left: 15px;
+  display: none;
+}
+
+.next-img-button {
+  right: 15px;
+}
+
+.prev-img-button:hover {
+  background: rgba(255, 255, 255);
+}
+
+.next-img-button:hover {
+  background: rgba(255, 255, 255);
+}
+
+/* Modal fullscreen negro */
+/* Fondo general del modal */
+.modalImagen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 1);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Encabezado superior */
+.modal-header {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  width: 110px;
+}
+
+.close-btn:hover {
+  background-color: var(--color-fondo);
+  color: var(--darkgrey-color);
+}
+
+.contador {
+  font-weight: 700;
+  font-size: 20px;
+  width: 50px;
+}
+
+/* Contenedor central de imagen */
+.modal-contenido {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  max-width: 1000px;
+  height: 80%;
+}
+
+.modal-contenido img {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: contain;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Botones laterales de navegación */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  font-size: 2rem;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.nav-btn.left {
+  left: -80px;
+}
+
+.nav-btn.right {
+  right: -80px;
+}
+
+/* Adaptación para pantallas móviles */
+@media (max-width: 768px) {
+  .modal-contenido img {
+    max-height: 60vh;
+  }
+
+  .nav-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.5rem;
+  }
+
+  .nav-btn.left {
+    left: 10px;
+  }
+
+  .nav-btn.right {
+    right: 10px;
+  }
+
+  .modal-header {
+    padding: 0 20px;
+  }
+}
+
+
+  /*areas de numero de fotos disponibles*/
+  .image-counter-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: rgba(7, 7, 7, 0.635); /* color con 80% de opacidad */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* sombra sutil */
+  font-family: "Segoe UI", Roboto, sans-serif;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.image-counter-current {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--yellow-logo); /* azul Microsoft */
+}
+
+.image-counter-separator {
+  margin: 0 6px;
+  font-size: 1.0rem;
+  font-weight: 400;
+  color: var(--blanco-logo); /* gris suave */
+}
+
+.image-counter-total {
+  font-size: 1.0rem;
+  font-weight: 500;
+  color: var(--blanco-logo); /* gris oscuro */
+}
+
+
+  /*IMAGENES MOVILES CARUSEL*/
+
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      display: none;
+    }
+
+    .carousel-images {
+      display: flex;
+      transition: trasform 0.5s ease-in-out;
+      height: 300px;
+    }
+
+    .slide {
+      min-width: 100%;
+      position: relative;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--darkgrey-color);
+      color: var(--blanco-logo);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3 ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .carousel-btn:hover {
+      background: var(--yellow-logo);
+    }
+
+    .prev-btn {
+      left: 20px;
+    }
+
+    .next-btn {
+      right: 20px;
+    }
+
+    /*Animation  for slide transition*/
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .slide {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    /*SECCION DE PRECIO, UBICACION Y FECHA PUBLICADO*/
+    .infoAnuncio {
+      display: flex;
+      position: relative;
+      width: 60%;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    /* Contenedor A */
+    #sectionA {
+      position: relative;
+      height: 100%;
+      border-radius: 6px;
+    }
+
+    /* Caja interna B */
+    .inner-boxB {
+      height: 100%;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 10px;                      /* espacio entre ellos */
+      padding-left: 30px;
+    }
+
+    /* Caja C flotante */
+    #floatingBox {
+      position: absolute;
+      right: -65%;
+      width: 50%;
+      background: transparent;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 16px;
+      box-shadow: 0 4px 5px rgba(0,0,0,0.15);
+      z-index: 999;
+
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .contact-card-movil {
+      width: 100%;
+      display: none;
+      justify-content: center;
+    }
+
+    /* Contenido adicional para scroll */
+    .scroll-space {
+      height: 1500px;
+      background: linear-gradient(white, #dcdcdc);
+    }
+
+
+    .precio-container,
+    .anuncio-ubicacion,
+    .anuncio-fecha {
+      flex: 1;             /* cada uno ocupa el mismo espacio */
+      text-align: center;  /* centra el contenido */
+    }
+
+    /*titulo movil*/
+    .titulo-anuncio-movil {
+  font-size: 25px;          /* Tamaño fijo para móvil */
+  font-weight: 600;         /* Elegante, no demasiado grueso */
+  font-family: "Segoe UI", Roboto, Inter, sans-serif; /* Fuente moderna y limpia */
+  line-height: 1.3;         /* Espaciado cómodo entre líneas */
+  color: #222;              /* Buen contraste */
+  word-wrap: break-word;    /* Permite cortar palabras largas */
+  overflow-wrap: break-word; /* Compatibilidad extra */
+  white-space: normal;      /* Forzar salto de línea en textos largos */
+  margin: 0 0 12px 0;       /* Separación inferior */
+  display: none;
+}
+
+
+    /*precio titulo*/
+    .precio-container {
+      display: inline-flex;
+      align-items: baseline;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    }
+
+.precio-moneda {
+  font-size: 2.0rem;
+  color: #555;
+  margin-right: 4px;
+  font-weight: 500;
+}
+
+.precio-cantidad {
+  font-size: 2.0rem;
+  font-weight: 700;
+  color: #111;
+}
+   /*direccion titulo*/
+ .anuncio-ubicacion {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* un poco más de espacio entre icono y texto */
+  font-family: "Open Sans", "Segoe UI", "Arial", sans-serif; /* fuente legible tipo dirección */
+  font-size: 1.1rem; /* tamaño adecuado para ir debajo de un título de 1.5rem */
+  font-weight: 400;
+  color: #666; /* gris neutro, no compite con el título */
+}
+
+.ubicacion-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--main-color); /* icono destacado */
+}
+
+.ubicacion-texto {
+  display: inline-block;
+  line-height: 1.2; /* para que esté alineado verticalmente con el icono */
+}
+
+
+.anuncio-fecha {
+  font-family: "Open Sans", "Segoe UI", Arial, sans-serif;
+  font-size: 0.95rem; /* más pequeño que ubicación */
+  color: var(--darkgrey-color); /* gris suave para no competir visualmente */
+  font-weight: 400;
+}
+
+
+/*INFORMACION DE LA TARJETA DE CONTACTO*/
+
+
+
+/* 📦 Caja de información */
+.info-box {
+  background: #ffffff;
+  color: white;
+  width: 100%;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 🏷️ Etiquetas de texto */
+.info-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-top: 6px;
+  color: var(--darkgrey-color);
+  text-align: left;
+}
+
+.phone-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--darkgrey-color);
+  margin-top: 10px;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+/* 👤 Sección del usuario */
+.user-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+  background-color: var(--main-color);
+}
+
+.user-name {
+  font-size: 1.0rem;
+  font-weight: 600;
+  color: var(--darkgrey-color);
+}
+
+/* 🔘 Botón */
+.action-btn {
+  width: 100%;
+  padding: 12px 0;
+  background-color: #f7c843;
+  color: #1a1a1a;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.action-btn:hover {
+  background-color: #ffd45e;
+}
+
+
+
+/*AREA PARA DETALLES DEL ANUCIO*/
+
+.app-container {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+}
+
+.property-section {
+  background-color: #f5f5f7;
+  width: 60%;
+  max-width: 700px;
+  padding: 25px;
+  padding-top: 0;
+  border: 1px solid #e5e5e7;
+  border-radius: 12px;
+  margin-left: 10px;
+}
+
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px 30px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  color: #8e8e93; /* gris elegante estilo Apple */
+  flex-shrink: 0;
+}
+
+.label {
+  font-size: 0.95rem;
+  color: #1d1d1f;
+}
+
+.value {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #000;
+}
+
+
+/*FOOTER*/
+
+.footer {
+  background-color: #222;
+  color: #eee;
+  padding: 20px 0;
+  font-family: Arial, sans-serif;
+}
+
+.container-footer {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-left h3 {
+  margin: 0 0 8px 0;
+  color: var(--secondary-color);
+}
+
+.footer-right a {
+  color: #eee;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-right a:hover {
+  color: var(--secondary-color);
+}
+
+/*AREA DE DESCRIPCION DEL ANUNCIO*/
+/* Fuente moderna y corporativa */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+    .descripcion-container {
+      width: 60%;
+      margin: 2rem 2rem;
+      font-family: 'Inter', sans-serif;
+      background: transparent;
+      color: #222;
+    }
+
+    .descripcion-titulo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    .descripcion-texto {
+      font-size: 1rem;
+      line-height: 1.6;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .descripcion-texto.corto {
+      max-height: 4.5em; /* muestra aprox. 3 líneas */
+    }
+
+    .ver-mas-btn {
+      margin-top: 0.8rem;
+      background: none;
+      border: none;
+      color: var(--main-color);
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0;
+      font-size: 1.1rem;
+      display: flex;
+      gap: 5px;
+    }
+
+    .ver-mas-btn:hover {
+      text-decoration: underline;
+    }
+
+
 
     @media (max-width: 768px) {
 
@@ -245,6 +1075,10 @@ html, body {
         .main {
         padding-top: 40px;
         height: 100%;
+        }
+
+        .mainAnuncio {
+          padding-top: 70px; /* 👈 misma altura que el header */
         }
 
         h1 {
@@ -265,6 +1099,146 @@ html, body {
             padding: 12px;       
         }
 
+        .titulo-anuncio-text {
+          display: none;
+        }
+        .icono-atras-movil {
+          display: flex;
+        }
 
+        /*precio titulo*/
+    .titulo-anuncio-movil {
+      display: block;
+    }
+        /*moneda titulo*/
+        .precio-moneda, .precio-cantidad {
+          font-size: 1.6rem;
+        }
+
+        .inner-boxB {
+          padding-left: 20px;
+          gap: 4px;
+        }
+
+        /*SECCION DE LAS IMAGENES*/
+
+        .imagenes-contenedor {
+          display: none;
+        }
+
+        .carousel-container {
+          display: block;
+        }
+
+        /* Caja C flotante */
+    #floatingBox {
+      display: none;
+    }
+
+    .infoAnuncio {
+      width: 100%;
+      padding-left: 0;
+      height: 100%;
+    }
+
+    /*INFORMACION DE LA TARJETA DE CONTACTO*/
+    .info-box {
+    width: 90%;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .user-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .user-avatar {
+    width: 80px;
+    height: 80px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .user-name {
+    font-size: 1.3rem;
+  }
+
+  .info-label,
+  .phone-label {
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .action-btn {
+    padding: 14px 0;
+    font-size: 1.1rem;
+    margin-top: 10px;
+  }
+
+  /*AREA PARA DETALLES DEL ANUCIO*/
+  .property-section {
+    padding: 20px;
+    border-radius: 0;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .section-title {
+    font-size: 1.15rem;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .label,
+  .value {
+    font-size: 0.9rem;
+  }
+
+
+
+
+
+
+
+  .descripcion-container {
+        width: 100%;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      .descripcion-titulo {
+      font-size: 20px;
+    }
+
+
+    .contact-card-movil {
+      display: flex;
+    }
+
+     /*FOOTER*/
+
+  .container-footer {
+    flex-direction: column;
+    text-align: center;
+    max-width: 100%;
+  }
+  .footer-right {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  .footer-right a {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 
     }
