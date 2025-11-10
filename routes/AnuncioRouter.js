@@ -78,28 +78,116 @@ console.log(usuarioId)
   }
 });
 
-anuncioRoutes.post("/save-changes", (req, res) => {
+
+anuncioRoutes.post("/save-changes", ensureAuthenticated, async (req, res) => {
   // req.body contiene todos los campos enviados desde el formulario
   const body = req.body;
 
   // Convertimos campos específicos
   const anuncio = {
     ...body,
-    anuncioId: Number(body.anuncioId),
+    id: Number(body.id),
     hab: Number(body.hab),
     banos: Number(body.banos),
     metros_cuadrados: Number(body.metros_cuadrados),
     parqueos: Number(body.parqueos),
     precio: Number(body.precio),
     amueblado: body.amueblado === "true",
-    moneda: req.body.moneda?.toUpperCase()
+    moneda: req.body.moneda?.toUpperCase(),
+    tipo_inmueble: body.tipo_inmueble.toLowerCase(),
+    ciudad: body.ciudad.trim(),
+    sector: body.sector.trim(),
+    inmueble: body.inmueble.trim(),
   };
-
+ 
   console.log(anuncio);
+  const usuarioId = req.user.id;
 
-  // Respuesta al cliente
-  res.send("Datos recibidos correctamente");
+  try {
+    // 1️⃣ Confirmar que el anuncio existe
+    const { rows } = await db.query(
+      "SELECT * FROM inmuebles WHERE id = $1",
+      [anuncio.id]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ success: false, message: "El anuncio no existe." });
+    }
+
+    const anuncioBD = rows[0];
+    console.log(anuncioBD);
+    // 2️⃣ Confirmar que el usuario tiene permiso para editar
+    if (anuncioBD.usuario_id !== usuarioId) {
+      return res.status(403).json({ success: false, message: "No tienes permiso para editar este anuncio." });
+    }
+
+    // 3️⃣ Crear objeto de cambios
+    const cambios = {};
+
+    // 4️⃣ Comparar campo por campo
+    for (const campo in anuncio) {
+      const nuevoValor = anuncio[campo];
+      console.log(`1 ${nuevoValor}`);
+      const valorActual = anuncioBD[campo];
+      console.log(`2 ${valorActual}`);
+
+
+      // Ignorar campos vacíos, nulos o undefined
+      if (
+        nuevoValor === "" ||
+        nuevoValor === null ||
+        nuevoValor === undefined
+      ) {
+        continue;
+      }
+
+      // Guardar en "cambios" solo si es diferente
+      if (nuevoValor != valorActual) {
+        console.log(`3 ${nuevoValor}`);
+        console.log(`4 ${cambios[campo]}`);
+
+        cambios[campo] = nuevoValor;
+      }
+    }
+
+    // 5️⃣ Si hay cambios, actualizar base de datos
+    if (Object.keys(cambios).length > 0) {
+      const campos = Object.keys(cambios);
+      const valores = Object.values(cambios);
+
+      // Crear dinámicamente la query
+      const sets = campos.map((campo, i) => `${campo} = $${i + 2}`).join(", ");
+
+      await db.query(
+        `UPDATE inmuebles SET ${sets} WHERE id = $1`,
+        [anuncio.id, ...valores]
+      );
+    } else {
+      return res.json({ success: true, message: "No hay cambios que guardar." });
+    }
+
+    // 6️⃣ Volver a obtener el anuncio actualizado
+    const { rows: updatedRows } = await db.query(
+      "SELECT * FROM inmuebles WHERE id = $1",
+      [anuncio.id]
+    );
+
+    const anuncioActualizado = updatedRows[0];
+
+    // 7️⃣ Redirigir al endpoint del anuncio actualizado
+    return res.redirect(`/anuncio/${anuncioActualizado.id}`);
+
+
+    // Si prefieres redirigir:
+    // res.redirect(`/anuncios/${anuncio.id}`);
+
+  } catch (error) {
+    console.error("Error al actualizar el anuncio:", error);
+    res.status(500).json({ success: false, message: "Error al actualizar el anuncio." });
+  }
 });
+
+
 
 
 
@@ -282,7 +370,7 @@ anuncioRoutes.get("/:id", getAnuncioById);
 // Endpoint para procesar el formulario
 
 console.time("multer save");
-anuncioRoutes.post("/prueba/new", upload.array("imagenes", 10), async (req, res) => {
+anuncioRoutes.post("/prueba/new", ensureAuthenticated, upload.array("imagenes", 10), async (req, res) => {
 console.timeEnd("multer save");
   try {
     // Todos los campos que no son archivos
@@ -308,8 +396,9 @@ console.timeEnd("multer save");
     const archivos = req.files;
 
 
-    console.log("📩 Datos del formulario:", req.body);
-    console.log("📷 Archivos recibidos:", archivos);
+    if (process.env.NODE_ENV !== "production") console.log("📷 Archivos recibidos:", archivos);
+    if (process.env.NODE_ENV !== "production") console.log("📩 Datos del formulario:", req.body);
+
 
     // Aquí podrías guardar en la base de datos...
 
@@ -327,26 +416,32 @@ console.timeEnd("multer save");
 anuncioRoutes.post("/upload-images", upload.array("imagenes", 10), async (req, res) => {
   try {
     const files = req.files;
-    const urls = [];
+    
 
-    for (const file of files) {
-      const fileStream = fs.createReadStream(file.path);
+    // Subida paralela de imágenes a S3
+    const urls = await Promise.all(
+      files.map(async (file) => {
+        const fileStream = fs.createReadStream(file.path);
 
-      const uploadParams = {
-        Bucket: process.env.BUCKET_NAME,
-        Key: `images/${Date.now()}_${file.originalname}`, // ✅ backticks
-        Body: fileStream,
-      };
+        const uploadParams = {
+          Bucket: process.env.BUCKET_NAME,
+          Key: `images/${Date.now()}_${file.originalname}`,
+          Body: fileStream,
+        };
 
-      const command = new PutObjectCommand(uploadParams);
-      await s3.send(command);
+        await s3.send(new PutObjectCommand(uploadParams));
 
-      const fileUrl = `https://${process.env.BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadParams.Key}`; // ✅ backticks
-      urls.push(fileUrl);
+        const fileUrl = `https://${process.env.BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadParams.Key}`;
 
-      // Elimina archivo temporal
-      fs.unlinkSync(file.path);
-    }
+        // Borra el archivo local después de subirlo
+        fs.unlink(file.path, (err) => {
+          if (err) console.error("Error eliminando archivo temporal:", err);
+        });
+
+        return fileUrl;
+      })
+);
+
 
 
     
@@ -371,13 +466,17 @@ anuncioRoutes.post("/upload-images", upload.array("imagenes", 10), async (req, r
         const amueblado = req.body.amueblado === "No Amueblado" ? false : true;
 
 
-    /* Asegúrate de que el usuario está autenticado
     const usuario_id = req.user?.id;
     if (!usuario_id) {
       return res.status(401).json({ error: 'Usuario no autenticado' });
-    }  */
+    }  
 
-    const usuario_id = 2;
+    // --- 🔹 Normalizar datos antes de insertar ---
+    const tipoInmuebleLimpio = tipo_inmueble ? tipo_inmueble.trim().toLowerCase() : null;
+    const ciudadLimpia = ciudad ? ciudad.trim() : null;
+    const sectorLimpio = sector ? sector.trim() : null;
+    const monedaLimpia = moneda ? moneda.trim().toUpperCase() : null;
+    const inmuebleLimpio = inmueble ? inmueble.trim() : null;
 
     // Consulta SQL para insertar
     const query = `
@@ -392,17 +491,33 @@ anuncioRoutes.post("/upload-images", upload.array("imagenes", 10), async (req, r
 
     // Ejecutar query
     const values = [
-      usuario_id, tipo_inmueble, titulo, descripcion, hab, banos, metros_cuadrados,
-      parqueos, ciudad, sector, precio, moneda, amueblado, inmueble
-    ];
+  usuario_id,
+  tipoInmuebleLimpio,
+  titulo,
+  descripcion,
+  hab,
+  banos,
+  metros_cuadrados,
+  parqueos,
+  ciudadLimpia,
+  sectorLimpio,
+  precio,
+  monedaLimpia,
+  amueblado,
+  inmuebleLimpio
+];
 
     const result = await db.query(query, values);
     const anuncio_id = result.rows[0].id;
 
     await guardarImagenes(anuncio_id, urls);
 
-    // Redirige al anuncio
-    res.redirect(`/anuncio/${anuncio_id}`);
+    res.json({
+      success: true,
+      anuncio_id,
+      message: "Anuncio creado correctamente"
+    });
+
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: error.message });

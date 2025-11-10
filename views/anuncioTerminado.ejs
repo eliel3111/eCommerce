@@ -19,7 +19,9 @@
 
 <body >
   <%- include("partials/header.ejs")%>
-
+  <% console.log("Esto es EJS EJS EJS") %>
+  <% console.log(user) %>
+  <% console.log(isAuthenticated) %>
 <div class="anuncioPage">
   <div class="sidebar"></div>
   <div class="mainAnuncio">
@@ -36,6 +38,20 @@
                 </svg>
             </div>
         </div>
+
+        <% if (isAuthenticated && user && user.id === anuncio.usuario_id) { %>
+            <!--Botón de Editar-->
+            <div class="guardarAnuncio-container">
+                <button  data-anuncio-id="<%= anuncio.id %>" class="editar-btn">
+
+                    <!-- Texto -->
+                    <span class="texto">Editar</span>
+                </button>    
+            </div>
+        <% } %>
+
+
+
         <!--Boton de Guardar-->
         <div class="guardarAnuncio-container">
             <div id="save-ad-btn" data-anuncio-id="<%= anuncio.id %>" class="guardar-btn">
@@ -372,15 +388,7 @@
       <!--AREA DE DESCRIPCION DEL ANUNCIO-->
       <div class="descripcion-container">
     <div class="descripcion-titulo">Descripción</div>
-    <div class="descripcion-texto corto" id="descripcionTexto">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt, elit ac eleifend finibus, 
-      nisl magna sodales lorem, vel eleifend justo eros ac erat. Morbi consequat tempor arcu, ac porta 
-      enim bibendum ut. Suspendisse non nisl vel libero congue accumsan. Nulla facilisi. Aenean sit amet 
-      ligula nec nulla sodales convallis ut ac mauris. Integer aliquet, magna et porta porta, urna eros 
-      egestas massa, at sagittis urna justo sit amet nunc. Vivamus venenatis eros a neque mattis, in 
-      imperdiet eros congue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames 
-      ac turpis egestas.
-    </div>
+    <div  class="descripcion-texto corto" id="descripcionTexto"><%= anuncio.descripcion %></div>
     <div class="ver-mas-btn" id="verMasBtn">
         <div>
             <svg width="15" height="15" version="1.1" id="fi_32195" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="451.847px" height="451.847px" viewBox="0 0 451.847 451.847" style="enable-background:new 0 0 451.847 451.847;" xml:space="preserve">

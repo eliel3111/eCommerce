@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buscar Inmuebles</title>
+
+  <!-- Estilos -->
+  <!-- CSS del header -->
+    <link rel="stylesheet" type="text/css" href="/styles/header.css">
+
+    <link rel="stylesheet" type="text/css" href="/styles/search-properties.css">
+
+  
+</head>
+
+<body>
+  <%- include("partials/header.ejs") %>
+  
+ <div class="page-container">
+  <div class="space left"></div>
+
+  <div class="main-content">
+    <!-- NUEVA ESTRUCTURA DE CONTENIDO -->
+    <div class="content-wrapper">
+    <div class="sidebar">
+             <!-- ===== Filtro lateral (vertical) ===== -->
+            <form id="filtroPropiedades" class="filter" method="POST" action="/inmuebles">
+           <%
+  // Aseguramos que currentFilters exista
+  let filtrosVisibles = [];
+
+  if (currentFilters && typeof currentFilters === "object") {
+    filtrosVisibles = Object.keys(currentFilters).filter(key => {
+      const value = currentFilters[key];
+      // Ignorar si la clave es "offset" o si el valor es null o vacío
+      return key !== "offset" && value !== null && value !== "";
+    });
+  }
+%>
+
+<% if (filtrosVisibles.length > 0) { %>
+                <div class="filter__group">
+                    <div class="filter__label">Filtrado por:</div>
+                    <div id="chips-filtros" class="chips" data-field="filtros">
+                    <button type="button" class="filter-chip" data-value="">Filtros</button>
+                    </div>
+                </div>
+            <% } %>
+            <!-- Tipo de búsqueda (rellena req.body.tipo_inmueble) -->
+            <div class="filter__group">
+                <div class="filter__label">Tipo de búsqueda</div>
+                <div id="tipo-inmueble" class="btn-row" data-field="tipo_inmueble">
+                <button type="button" class="btn-pill is-active" data-value="">Todos</button>
+                <button type="button" class="btn-pill" data-value="Venta">Venta</button>
+                <button type="button" class="btn-pill" data-value="Alquiler">Alquiler</button>
+                </div>
+                <input type="hidden" name="tipo_inmueble" id="tipo_inmueble" value="">
+            </div>
+
+            <!-- Categorías como divs (guarda en input oculto 'categoria') -->
+            <div class="filter__group">
+                <div class="filter__label">Categorías</div>
+                <div id="categoria-inmueble" class="chips" data-field="categoria">
+                <button type="button" class="chip is-active" data-value="">Todas las Categorías</button>
+                <button type="button" class="chip" data-value="Apartamentos">Apartamentos</button>
+                <button type="button" class="chip" data-value="Casas">Casas</button>
+                <button type="button" class="chip" data-value="Casas Vacacionales y Villas">Casas Vacacionales y Villas</button>
+                <button type="button" class="chip" data-value="Locales y Oficinas">Locales y Oficinas</button>
+                <button type="button" class="chip" data-value="Solares">Solares</button>
+                <button type="button" class="chip" data-value="Penthouses">Penthouses</button>
+                <button type="button" class="chip" data-value="Otros">Otros</button>
+                </div>
+                <!-- Si tu backend quiere 'inmueble' en lugar de 'categoria', cambia el name: -->
+                <input type="hidden" name="inmueble" id="categoria" value="">
+            </div>
+
+            <!-- Ordenar input oculto -->
+            <div class="filter__group">
+                <!-- Input oculto -->
+                <input type="hidden" id="ordenarHidden" name="ordenar" value="">
+            </div>
+
+            <!-- Ciudad / Sector -->
+            <div class="filter__group">
+                <label class="filter__label" for="ciudad">Ubicación:</label>
+                <div id="openModalBtn" class="ubicacion-div">
+                    <svg height="20" width="20" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                        <path d="m32 0a24.0319 24.0319 0 0 0 -24 24c0 17.23 22.36 38.81 23.31 39.72a.99.99 0 0 0 1.38 0c.95-.91 23.31-22.49 23.31-39.72a24.0319 24.0319 0 0 0 -24-24zm0 35a11 11 0 1 1 11-11 11.0066 11.0066 0 0 1 -11 11z" />
+                    </svg>
+                    <span class="span-inmuebles-ubicacion">Toda República Dominicana</span>
+                </div>
+
+                <input id="ciudad-busqueda" type="hidden" name="ciudad" class="input" placeholder="Ej. Santo Domingo">
+                <input id="sector-busqueda" type="hidden" name="sector" class="input" placeholder="Ej. Naco">
+            </div>
+
+            <!-- Moneda (botones) -->
+            <div class="filter__group">
+                <div class="filter__label">Moneda</div>
+                <div id="moneda-inmueble" class="btn-row" data-field="moneda">
+                <button type="button" class="btn-pill is-active" data-value="$RD">$RD</button>
+                <button type="button" class="btn-pill" data-value="$US">$US</button>
+                </div>
+                <input type="hidden" name="moneda" id="moneda" value="">
+            </div>
+
+            <!-- Precio -->
+            <div class="filter__group">
+                <div class="filter__label">Precio</div>
+                <div  class="range-row">
+                <input id="precio-min-inmueble" type="number" min="0" class="input" name="precio_min" placeholder="mín.">
+                <input id="precio-max-inmueble" type="number" min="0" class="input" name="precio_max" placeholder="máx.">
+                </div>
+                <button class="btn-primary" type="button" onclick="submitForm('filtroPropiedades')">
+                    Aplicar filtros
+                </button>
+            </div>
+
+            <!-- Metros -->
+            <div class="filter__group">
+                <div class="filter__label">Metros²</div>
+                <div class="range-row">
+                <input id="metros-min-inmueble" type="number" min="0" class="input" name="metros_min" placeholder="mín.">
+                <input id="metros-max-inmueble" type="number" min="0" class="input" name="metros_max" placeholder="máx.">
+                </div>
+                <button class="btn-primary" type="button" onclick="submitForm('filtroPropiedades')">
+                    Aplicar filtros
+                </button>
+            </div>
+
+            <!-- Habitaciones (igual estilo que Precio) -->
+            <div class="filter__group">
+                <div class="filter__label">Habitaciones</div>
+                <div class="range-row">
+                <input id="hab-min-inmueble" type="number" min="0" class="input" name="hab_min" placeholder="mín.">
+                <input id="hab-max-inmueble" type="number" min="0" class="input" name="hab_max" placeholder="máx.">
+                </div>
+                <button class="btn-primary" type="button" onclick="submitForm('filtroPropiedades')">
+                    Aplicar filtros
+                </button>
+            </div>
+
+            <!-- Baños (igual estilo que Precio) -->
+            <div class="filter__group">
+                <div class="filter__label">Baños</div>
+                <div class="range-row">
+                <input id="banos-min-inmueble" type="number" min="0" class="input" name="banos_min" placeholder="mín.">
+                <input id="banos-max-inmueble" type="number" min="0" class="input" name="banos_max" placeholder="máx.">
+                </div>
+                <button class="btn-primary" type="button" onclick="submitForm('filtroPropiedades')">
+                    Aplicar filtros
+                </button>
+            </div>
+
+            <!-- Amueblado como checkbox que envía "true"/"false" -->
+            <div class="filter__group">
+            <div class="filter__label">Amueblado</div>
+
+            <div id="amueblado-inmueble" class="btn-row" data-field="amueblado">
+                <button type="button" class="btn-pill" data-value="true">Sí</button>
+                <button type="button" class="btn-pill" data-value="false">No</button>
+            </div>
+
+            <input type="hidden" name="amueblado" id="amueblado" value="">
+            </div>
+
+
+            <!-- Offset -->
+            <div class="filter__group">
+                
+                <input id="offset" name="offset" type="hidden" min="0" value="0" class="input">
+            </div>
+
+            <button class="btn-primary" type="submit">Aplicar filtros</button>
+            </form>
+
+
+
+
+<!-- Modal Overlay -->
+<div id="modalOverlay">
+  <div id="modalContent">
+    <!-- Botón de cierre -->
+    <button id="closeModalBtn" class="closeModalBtn-x">
+      <svg width="24" height="24" viewBox="0 0 20 20">
+        <line x1="4" y1="4" x2="16" y2="16" stroke="#b99a32" stroke-width="2" />
+        <line x1="16" y1="4" x2="4" y2="16" stroke="#b99a32" stroke-width="2" />
+      </svg>
+    </button>
+
+    <!-- Título -->
+    <div class="modal-title-label">Elija su Ubicación:</div>
+
+    <!-- Ciudad -->
+    <div id="containerCity">
+      <div class="modal-city-label">Ciudad:</div>
+      <div id="divA">
+        <div id="cityButton">Seleccionar</div>
+        <div class="div-inmmuebles">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="15" height="15"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sector -->
+    <div id="containerSector">
+      <div class="modal-city-label">Sector:</div>
+      <div id="divB" class="modal-city-container">
+        <div id="sectorButton">Seleccionar</div>
+        <div class="div-inmmuebles">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="15" height="15"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón Guardar -->
+    <button id="locationSaveButton" class="fixed-save-btn">Guardar</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="main-area">
+        <!--AREA DE ORDER DE VISTA-->
+        <div class="ordenar-container">
+            <select id="ordenar" class="input">
+                <option value="nuevo">Más nuevos</option>
+                <option value="viejo">Más antiguos</option>
+                <option value="precio_bajo">Precio más bajo</option>
+                <option value="precio_alto">Precio más alto</option>
+            </select>
+        </div>
+
+        <h1>Bienvenido</h1>
+        <p>Este es el contenido del centro.</p>
+    </div>
+    </div>
+  </div>
+
+  <div class="space right"></div>
+</div>
+<!-- ✅ Aquí se pasa currentFilters al frontend JS -->
+  <!-- ✅ Aquí se pasa currentFilters al frontend JS -->
+<script>
+  window.currentFilters = <%- JSON.stringify(currentFilters || {}) %>;
+  window.anuncios = <%- JSON.stringify(anuncios || []) %>;
+</script>
+
+
+  
+<script src="/searchProperties.js" type="text/javascript"></script>
+</body>
+</html>

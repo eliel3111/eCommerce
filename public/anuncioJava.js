@@ -269,9 +269,14 @@ inputArchivo.addEventListener('change', () => {
 
 
 // Interceptar el submit del formulario
+const btnSubmit = document.querySelector(".submit-btn");
 const form = document.querySelector(".formAnuncio");
 form.addEventListener("submit", (e) => {
   e.preventDefault(); // evita el envío normal
+
+  btnSubmit.disabled = true;
+  btnSubmit.classList.add("loading");
+  btnSubmit.innerHTML = `<div class="spinner"></div><span class="btn-text">Publicando...</span>`;
 
   const formData = new FormData(form);
 
@@ -286,17 +291,18 @@ form.addEventListener("submit", (e) => {
   if (resultado === true) {
       console.time("⏱️ fetch"); // inicia el cronómetro
   // Enviar con fetch
-  fetch(form.action, {
-    method: "POST",
-    body: formData
-  })
+  fetch(form.action, { method: "POST", body: formData })
   .then(res => res.json())
-  .then(data => { 
-    console.log("✅ Respuesta servidor:", data);
-    console.timeEnd("⏱️ fetch"); // mide cuánto tardó el request completo
-
+  .then(data => {
+    if (data.success) {
+      window.location.href = `/anuncio/${data.anuncio_id}`;
+    } else {
+      alert(data.message || "Error desconocido");
+    }
   })
-  .catch(err => console.error("❌ Error al enviar:", err));
+  .catch(err => console.error(err));
+
+
 } else {
   return;
 }

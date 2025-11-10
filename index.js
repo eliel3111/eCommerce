@@ -48,12 +48,14 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+// ✅ Middleware global único
 app.use((req, res, next) => {
-  res.locals.user = req.user;
-  res.locals.messages = req.flash();
+  res.locals.user = req.user || null; // Usuario autenticado o null
+  res.locals.isAuthenticated = req.isAuthenticated ? req.isAuthenticated() : false;
+  res.locals.messages = req.flash(); // Mensajes flash disponibles en las vistas
   next();
 });
+
 
 
 

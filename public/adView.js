@@ -1,6 +1,6 @@
 
 // Obtaining different elements from an input event 
- console.log(anuncio.favoritos);
+ console.log(anuncio);
 const saveAdBtn = document.getElementById("save-ad-btn"); //Button to save add
 saveAdBtn.addEventListener("click", () => {
   console.log("Save button clicked!");
@@ -406,24 +406,30 @@ const texto = document.getElementById('descripcionTexto');
 
 
 
-    // EVENT para cuando dan click a boton contacto
-    document.addEventListener("DOMContentLoaded", () => {
-    // Obtener el botón
-    const btnContacto = document.getElementById("btnContacto");
+    // EVENT para cuando dan click al botón de contacto
+document.addEventListener("DOMContentLoaded", () => {
+  // Obtener el botón
+  const btnContacto = document.getElementById("btnContacto");
+  if (!btnContacto) return; // Si no existe el botón, salir
 
-    // Guardar el número desde EJS
-    const telefonoRaw = anuncio.usuario.telefono;
+  // Obtener el número de teléfono (si existe)
+  const telefonoRaw = anuncio?.usuario?.telefono || "";
 
-    const telefonoFormateado = telefonoRaw.replace(
-      /(\d{3})(\d{3})(\d{4})/,
-      "$1-$2-$3"
-    );
+  // Formatear el número si tiene 10 dígitos
+  const telefonoFormateado = /^\d{10}$/.test(telefonoRaw)
+    ? telefonoRaw.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")
+    : telefonoRaw;
 
-    // Cuando hacen click, reemplazar el texto del botón
-    btnContacto.addEventListener("click", () => {
-      btnContacto.textContent = telefonoFormateado || "No disponible";
-    });
+  // Evento click
+  btnContacto.addEventListener("click", () => {
+    if (telefonoFormateado) {
+      btnContacto.textContent = telefonoFormateado;
+    } else {
+      btnContacto.textContent = "No disponible";
+    }
   });
+});
+
 
 // Se busca todos los elementos, el botón, el texto adentro y el icono 
 const btn = document.getElementById("save-ad-btn");
@@ -490,8 +496,20 @@ btn.addEventListener("click", () => {
     }
   });
 
-  //EVENT: Para quecuando le den a guardar haga algo
+  //EVENT: Para quecuando le den a editar haga algo
+// Espera que el DOM cargue
+  document.addEventListener("DOMContentLoaded", () => {
+    const editarBtn = document.querySelector(".editar-btn");
 
+    if (editarBtn) {
+      editarBtn.addEventListener("click", () => {
+        const anuncioId = editarBtn.getAttribute("data-anuncio-id");
+
+        // Redirige a la ruta de edición usando GET
+        window.location.href = `/anuncio/editar/${anuncioId}`;
+      });
+    }
+  });
 
 
 
